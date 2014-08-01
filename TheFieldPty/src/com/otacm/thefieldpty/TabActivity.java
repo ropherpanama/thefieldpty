@@ -1,29 +1,12 @@
 package com.otacm.thefieldpty;
 
-import java.io.InputStream;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
-import com.example.sample.R;
-import com.google.gson.reflect.TypeToken;
-import com.otacm.thefieldpty.adapters.ExpandableListAdapter;
-import com.otacm.thefieldpty.adapters.ExpandableScores;
-import com.otacm.thefieldpty.groups.GroupLigas;
-import com.otacm.thefieldpty.groups.GroupScores;
-import com.otacm.thefieldpty.http.HTTPTasks;
-import com.otacm.thefieldpty.json.JSONUtils;
-import com.otacm.thefieldpty.json.beans.Categoria;
-import com.otacm.thefieldpty.json.beans.Liga;
-import com.otacm.thefieldpty.json.beans.Scores;
-import com.otacm.thefieldpty.utils.AppUtils;
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.res.Resources;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.support.v7.app.ActionBarActivity;
 import android.util.SparseArray;
 import android.view.Menu;
@@ -32,13 +15,27 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.ExpandableListView;
 import android.widget.TabHost;
 import android.widget.TabHost.OnTabChangeListener;
-import android.widget.Toast;
+import com.example.sample.R;
+import com.google.gson.reflect.TypeToken;
+import com.otacm.thefieldpty.adapters.ExpandableListAdapter;
+import com.otacm.thefieldpty.adapters.ExpandableScores;
+import com.otacm.thefieldpty.groups.GroupLigas;
+import com.otacm.thefieldpty.groups.GroupScores;
+import com.otacm.thefieldpty.json.JSONUtils;
+import com.otacm.thefieldpty.json.beans.Calendario;
+import com.otacm.thefieldpty.json.beans.Categoria;
+import com.otacm.thefieldpty.json.beans.Liga;
+import com.otacm.thefieldpty.json.beans.Scores;
+import com.otacm.thefieldpty.servicios.PartidoServicio;
+import com.otacm.thefieldpty.utils.AppUtils;
+import com.otacm.thefieldpty.utils.Fechas;
 
 public class TabActivity extends ActionBarActivity {
 	private ExpandableListView expandable_list_ligas;
 	private ExpandableListView expandableListScores;
-	private StringBuilder jsonLigas;
-	private StringBuilder jsonCategorias;
+//	private StringBuilder jsonLigas;
+//	private StringBuilder jsonCategorias;
+	
 	private Context ctx = this;
 	private SparseArray<GroupLigas> groups = new SparseArray<GroupLigas>();
 	private SparseArray<GroupScores> groupScores = new SparseArray<GroupScores>();
@@ -49,11 +46,17 @@ public class TabActivity extends ActionBarActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_tab);
 		expandable_list_ligas = (ExpandableListView) findViewById(R.id.expandable_list_ligas);
-		expandableListScores = (ExpandableListView) findViewById(R.id.expandableListScores);
+		expandableListScores  = (ExpandableListView) findViewById(R.id.expandableListScores);
+		
 		createTabHost();
 		
-		//Se llama al servicio web al iniciar la actividad
-		new ConsumirServicio().execute();
+		createExpandableData();
+		final ExpandableListAdapter expListAdapter = new ExpandableListAdapter((Activity) ctx, groups);
+        expandable_list_ligas.setAdapter(expListAdapter);
+        
+        cargarTabScores();
+		final ExpandableScores expSc = new ExpandableScores((Activity) ctx, groupScores);
+		expandableListScores.setAdapter(expSc); 
 	}
 
 	@Override
@@ -117,106 +120,14 @@ public class TabActivity extends ActionBarActivity {
 	}
 	
 	/**
-	 * ASYNC TASK
-	 */
-	
-	private class ConsumirServicio extends AsyncTask<Void, Void, String> {
-
-		ProgressDialog progressDialog;
-		long inicio;
-		long termino;
-		ArrayList<InputStream> streams = new ArrayList<InputStream>();
-
-		@SuppressWarnings("resource")
-		protected boolean obtenerDataDeServidor() {
-			try{
-				Resources res = getResources();
-				String[] webservices = res.getStringArray(R.array.servicios_web);
-				
-				for(int i = 0; i < webservices.length; i++) {
-					InputStream in =  HTTPTasks.getJsonFromServer(getString(R.string.host_webservices) + webservices[i]);
-					if(in == null)
-						return false;
-					else
-						streams.add(in);
-				}
-				
-				String ligasData = new Scanner(streams.get(0)).useDelimiter("\\A").next(); 
-				jsonLigas = new StringBuilder(ligasData);
-				ligasData = null;
-				
-				String categoriasData = new Scanner(streams.get(1)).useDelimiter("\\A").next(); 
-				jsonCategorias = new StringBuilder(categoriasData);
-				categoriasData = null;
-				
-				//El tercer item de json lo escribo en disco para usarlo en otras actividades
-				String calendarioData = new Scanner(streams.get(2)).useDelimiter("\\A").next(); 
-				AppUtils.writeJsonOnDisk(getApplicationContext(), "calendario", new StringBuilder(calendarioData));
-				calendarioData = null;
-				
-				//Escribo en disco tambien el json de los scores
-				String scoresData = new Scanner(streams.get(3)).useDelimiter("\\A").next(); 
-				AppUtils.writeJsonOnDisk(getApplicationContext(), "scores", new StringBuilder(scoresData));
-				scoresData = null;
-				
-				return true;
-			}catch(Exception e){
-				progressDialog.dismiss();
-				e.printStackTrace();
-				return false;
-			}
-		}
-		
-		protected void onPreExecute() {
-			super.onPreExecute();
-			inicio = SystemClock.elapsedRealtime();
-			progressDialog = new ProgressDialog(TabActivity.this);
-			progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-			progressDialog.setCancelable(false);
-			progressDialog.setProgress(1);
-			progressDialog.setMax(100);
-			progressDialog.setMessage("Buscando en el servidor ...");
-			progressDialog.show();
-		}
-
-		@Override
-		protected String doInBackground(Void... params) {
-			
-			if(!obtenerDataDeServidor())
-				return getString(R.string.error_http_request); 
-			
-			return "success";
-		}
-
-		@Override
-		protected void onPostExecute(String result) {
-			super.onPostExecute(result);
-			termino = SystemClock.elapsedRealtime();
-			progressDialog.dismiss();
-			
-			if(result.equals("success")) {
-				
-				createExpandableData();
-				final ExpandableListAdapter expListAdapter = new ExpandableListAdapter((Activity) ctx, groups);
-				expandable_list_ligas.setAdapter(expListAdapter);
-				
-				//Se cargan los datos para el listView de los Scores
-				cargarTabScores();
-				final ExpandableScores expSc = new ExpandableScores((Activity) ctx, groupScores);
-				expandableListScores.setAdapter(expSc); 
-				
-				Toast.makeText(getApplicationContext(), String.format(getString(R.string.data_actualizada), (termino - inicio)), Toast.LENGTH_LONG).show();
-			}else {
-				Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
-			}
-		}
-	}
-	
-	/**
 	 * PRIMER TAB (LIGAS)
 	 * Carga los datos de la expandable list a partir de lo recibido por el servicio web
 	 */
 	public void createExpandableData() {
+		//Cargo json del SD Card
+		StringBuilder jsonLigas = AppUtils.getJsonFromDisk(getApplicationContext(), "ligas");
+		StringBuilder jsonCategorias = AppUtils.getJsonFromDisk(getApplicationContext(), "cats");
+		
 		Type typeLiga = new TypeToken<List<Liga>>() {}.getType();
 		List<Liga> ligas = JSONUtils.factoryGson().fromJson(jsonLigas.toString(), typeLiga);
 
@@ -252,11 +163,13 @@ public class TabActivity extends ActionBarActivity {
 			int cont = 0; 
 			
 			for(Scores sc : scores) {
-				
+				Calendario c = new Calendario();
+				c = PartidoServicio.getPartidoById(getApplicationContext(), sc.getIdPartido());
 				GroupScores g = new GroupScores();
 				String strTemp = "";
 				
-				g.setLabelNameLiga(sc.getLiga() + " : " + sc.getNomEquipo1() + " vs " + sc.getNomEquipo2());
+				g.setNombreEquipo1(sc.getNomEquipo1());
+				g.setNombreEquipo2(sc.getNomEquipo2());
 				
 				if(sc.getPeriodos().size() > 0) {
 					
@@ -269,8 +182,23 @@ public class TabActivity extends ActionBarActivity {
 				else 
 					g.setTeamsMatch("No hay puntajes para este partido");
 				
-				cont++;
-				groupScores.append(cont, g); 
+				long dias = Fechas.diasEntreDosFecha(Fechas.fechahoy(), Fechas.string2Date(c.getFecha(), Fechas.DDMMYYYYGUION));
+				//Solo muestro los partidos para hoy 
+				if(dias >= -3 && dias <= 4){
+					if(dias == 0 && Fechas.compareHours(c.getHora()) == 1) //PARTIDO DE HOY,
+						g.setStatus("Hoy");
+					else if(dias == 0 && Fechas.compareHours(c.getHora()) > 3)//PARTIDO DE HOY, Despues de 3 horas se da por finalizado el partido
+						g.setStatus("Finalizado");
+					else if(dias == 0 && Fechas.compareHours(c.getHora()) == 2)//PARTIDO DE HOY,
+						g.setStatus("No ha iniciado");
+					else if (dias < 0)//PARTIDO DE ANTES,
+						g.setStatus("Finalizado");
+					else
+						g.setStatus("Sin informacion");
+					
+					cont++;
+					groupScores.append(cont, g);
+				} 
 			}
 			
 		} catch (Exception e) {

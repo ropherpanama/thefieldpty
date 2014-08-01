@@ -46,4 +46,24 @@ public class PartidoServicio {
 
 		return nombreLiga;
 	}
+	
+	public static Calendario getPartidoById(Context ctx, int id){
+		try{
+			StringBuilder jsonCalendario = AppUtils.getJsonFromDisk(ctx, "calendario");
+			Type typeCalendario = new TypeToken<List<Calendario>>() {}.getType();
+			List<Calendario> calendario = JSONUtils.factoryGson().fromJson(jsonCalendario.toString(), typeCalendario);
+			Calendario retorno = new Calendario(); 
+			for (Calendario c : calendario) {
+				if (c.getIdPartido() == id){
+					retorno = c;
+					break;
+				}
+			}
+			
+			return retorno; 
+		}catch(Exception e){
+			e.printStackTrace();
+			return null;
+		}
+	}
 }

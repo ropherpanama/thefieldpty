@@ -68,10 +68,11 @@ public class FirstTabChildActivity extends ActionBarActivity {
 			for(Calendario c : calendario) {
 				if(c.getLiga().equals(parent) && c.getCategoria().equals(children)){
 					GroupCalendario group = new GroupCalendario();
-					group.setLabel(c.getEquipo1() + " vs " + c.getEquipo2());
+					group.setEquipo1(c.getEquipo1());
+					group.setEquipo2(c.getEquipo2()); 
 					group.setDetallePartido(String.format(getString(R.string.detalle_partido), c.getFecha(), c.getHora(), c.getLugar()));
 					groups.append(cont, group);
-					System.out.println(group.getLabel() + "\n" + group.getDetallePartido());
+					System.out.println(group.getDetallePartido());
 				}else {
 					//Toast.makeText(getApplicationContext(), getString(R.string.no_hay_calendario), Toast.LENGTH_LONG).show();
 				}

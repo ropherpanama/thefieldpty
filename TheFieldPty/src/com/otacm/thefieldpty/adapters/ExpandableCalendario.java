@@ -2,7 +2,8 @@ package com.otacm.thefieldpty.adapters;
 
 import com.example.sample.R;
 import com.otacm.thefieldpty.groups.GroupCalendario;
-
+import com.otacm.thefieldpty.utils.AppUtils;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.util.SparseArray;
@@ -12,9 +13,10 @@ import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
 
+@SuppressLint({ "DefaultLocale", "InflateParams" })
 public class ExpandableCalendario extends BaseExpandableListAdapter {
 	private Activity context;
-	private String encabezado;
+//	private String encabezado;
 	private SparseArray<com.otacm.thefieldpty.groups.GroupCalendario> groups;
 	private TextView textViewChildCalendario;
 
@@ -63,22 +65,34 @@ public class ExpandableCalendario extends BaseExpandableListAdapter {
 	 * Realiza el setup de los nodos padres (Ligas)
 	 */
 	@Override
-	public View getGroupView(int groupPosition, boolean isExpanded,
-			View convertView, ViewGroup parent) {
+	public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
 		// GroupCalendario group = (GroupCalendario) getGroup(groupPosition);
 		com.otacm.thefieldpty.groups.GroupCalendario group = groups.valueAt(groupPosition);
-		encabezado = group.getLabel();
+//		encabezado = group.getLabel();
 
 		if (convertView == null) {
-			LayoutInflater infalInflater = (LayoutInflater) context
-					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			convertView = infalInflater.inflate(R.layout.calendario_group_view,
-					null);
+			LayoutInflater infalInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			convertView = infalInflater.inflate(R.layout.calendario_group_view, null);
 		}
 
-		TextView textoEncabezado = (TextView) convertView
-				.findViewById(R.id.textoEncabezado);
-		textoEncabezado.setText(encabezado);
+		int id_drawable_1 = AppUtils.getDrawableByName(context, group.getEquipo1().trim().toLowerCase().replace(" ", ""));
+		int id_drawable_2 = AppUtils.getDrawableByName(context, group.getEquipo2().trim().toLowerCase().replace(" ", ""));
+		
+		TextView textoEquipo1 = (TextView) convertView.findViewById(R.id.textoEquipo1);
+		textoEquipo1.setText(group.getEquipo1());
+		
+		TextView textoEquipo2 = (TextView) convertView.findViewById(R.id.textoEquipo2);
+		textoEquipo2.setText(group.getEquipo2());
+		
+		if(id_drawable_1 == 0)
+			textoEquipo1.setCompoundDrawablesWithIntrinsicBounds(AppUtils.getDrawableByName(context, "default_logo"),0,0,0);
+		else
+			textoEquipo1.setCompoundDrawablesWithIntrinsicBounds(id_drawable_1, 0, 0, 0); 
+		
+		if(id_drawable_2 == 0)
+			textoEquipo2.setCompoundDrawablesWithIntrinsicBounds(AppUtils.getDrawableByName(context, "default_logo"),0,0,0);
+		else
+			textoEquipo2.setCompoundDrawablesWithIntrinsicBounds(id_drawable_2, 0, 0, 0); 
 
 		return convertView;
 	}

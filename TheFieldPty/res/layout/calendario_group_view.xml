@@ -1,15 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="10dp" >
 
     <TextView
-        android:id="@+id/textoEncabezado"
+        android:id="@+id/textoEquipo1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/ic_9ners"
         android:paddingLeft="24dp"
         android:textSize="16sp" />
 
-</RelativeLayout>
+    <TextView
+        android:id="@+id/textoEquipo2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/ic_cardinals"
+        android:paddingLeft="24dp"
+        android:textSize="16sp" />
+
+</LinearLayout>

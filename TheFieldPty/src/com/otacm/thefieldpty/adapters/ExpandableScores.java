@@ -1,5 +1,6 @@
 package com.otacm.thefieldpty.adapters;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.util.SparseArray;
@@ -8,13 +9,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
-
 import com.example.sample.R;
 import com.otacm.thefieldpty.groups.GroupScores;
+import com.otacm.thefieldpty.utils.AppUtils;
 
+@SuppressLint({ "DefaultLocale", "InflateParams" })
 public class ExpandableScores extends BaseExpandableListAdapter {
 	private Activity context;
-	private String ligaName;
+//	private String ligaName;
 	private SparseArray<GroupScores> groups;
 
 	public ExpandableScores(Activity context, SparseArray<GroupScores> groups) {
@@ -58,10 +60,8 @@ public class ExpandableScores extends BaseExpandableListAdapter {
 	}
 
 	@Override
-	public View getGroupView(int groupPosition, boolean isExpanded,
-			View convertView, ViewGroup parent) {
+	public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
 		GroupScores group = groups.valueAt(groupPosition);
-		ligaName = group.getLabelNameLiga();
 
 		if (convertView == null) {
 			LayoutInflater infalInflater = (LayoutInflater) context
@@ -70,16 +70,34 @@ public class ExpandableScores extends BaseExpandableListAdapter {
 					.inflate(R.layout.score_group_view, null);
 		}
 
-		TextView textoEncabezado = (TextView) convertView
-				.findViewById(R.id.textoEncabezado);
-		textoEncabezado.setText(ligaName);
+		TextView textEquipo1 = (TextView) convertView.findViewById(R.id.textEquipo1);
+		textEquipo1.setText(group.getNombreEquipo1());
+		
+		int id_drawable_1 = AppUtils.getDrawableByName(context, group.getNombreEquipo1().trim().toLowerCase().replace(" ", ""));
+		int id_drawable_2 = AppUtils.getDrawableByName(context, group.getNombreEquipo2().trim().toLowerCase().replace(" ", ""));
+		
+		if(id_drawable_1 == 0)
+			textEquipo1.setCompoundDrawablesWithIntrinsicBounds(AppUtils.getDrawableByName(context, "default_logo"),0,0,0);
+		else
+			textEquipo1.setCompoundDrawablesWithIntrinsicBounds(id_drawable_1, 0, 0, 0); 
+		
+		TextView textEquipo2 = (TextView) convertView.findViewById(R.id.textEquipo2);
+		textEquipo2.setText(group.getNombreEquipo2());
+		
+		if(id_drawable_2 == 0)
+			textEquipo2.setCompoundDrawablesWithIntrinsicBounds(AppUtils.getDrawableByName(context, "default_logo"),0,0,0);
+		else
+			textEquipo2.setCompoundDrawablesWithIntrinsicBounds(id_drawable_2, 0, 0, 0); 
+		
+		TextView textStatus = (TextView) convertView.findViewById(R.id.textStatus);
+		textStatus.setText(group.getStatus());
+		
 
 		return convertView;
 	}
 
 	@Override
-	public View getChildView(int groupPosition, int childPosition,
-			boolean isLastChild, View convertView, ViewGroup parent) {
+	public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
 		GroupScores group = groups.valueAt(groupPosition);
 		final String children = group.getTeamsMatch();
 		LayoutInflater inflater = context.getLayoutInflater();
@@ -88,8 +106,7 @@ public class ExpandableScores extends BaseExpandableListAdapter {
 			convertView = inflater.inflate(R.layout.scores_child_view, null);
 		}
 
-		TextView textViewChildScore = (TextView) convertView
-				.findViewById(R.id.textViewChildScore);
+		TextView textViewChildScore = (TextView) convertView.findViewById(R.id.textViewChildScore);
 		textViewChildScore.setText(children);
 
 		return convertView;

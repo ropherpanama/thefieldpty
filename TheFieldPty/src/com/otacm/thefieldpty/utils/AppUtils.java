@@ -38,4 +38,17 @@ public class AppUtils {
 			return null;
 		}
 	}
+	
+	/**
+	 * Necesito encontrar las imagenes de los logos de los equipos
+	 * por su nombre para colocarlos en la pantalla, para eso uso esta funcion
+	 * @param ctx
+	 * @param str
+	 * @return id del resource, cero (0) si no existe
+	 */
+	public static int getDrawableByName(Context ctx, String str) {
+		String name = "ic_" + str.replace(".", "_");
+		System.out.println("Buscando drawable llamado : " + name);
+		return ctx.getResources().getIdentifier(name, "drawable", ctx.getPackageName());
+	}
 }

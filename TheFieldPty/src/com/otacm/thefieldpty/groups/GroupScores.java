@@ -1,29 +1,40 @@
 package com.otacm.thefieldpty.groups;
 
-
 public class GroupScores {
-private String labelNameLiga;
-private String teamsMatch;
+	private String nombreEquipo1;
+	private String nombreEquipo2;
+	private String teamsMatch;
+	private String status;
 
-public String getLabelNameLiga() {
-return labelNameLiga;
-}
+	public String getTeamsMatch() {
+		return teamsMatch;
+	}
 
-public void setLabelNameLiga(String labelNameLiga) {
-this.labelNameLiga = labelNameLiga;
-}
+	public void setTeamsMatch(String teamsMatch) {
+		this.teamsMatch = teamsMatch;
+	}
 
-public String getTeamsMatch() {
-return teamsMatch;
-}
+	public String getNombreEquipo1() {
+		return nombreEquipo1;
+	}
 
-public void setTeamsMatch(String teamsMatch) {
-this.teamsMatch = teamsMatch;
-}
+	public void setNombreEquipo1(String nombreEquipo1) {
+		this.nombreEquipo1 = nombreEquipo1;
+	}
 
-@Override
-public int hashCode() {
-String str = getLabelNameLiga()+getTeamsMatch();
-return str.hashCode();
-}
+	public String getNombreEquipo2() {
+		return nombreEquipo2;
+	}
+
+	public void setNombreEquipo2(String nombreEquipo2) {
+		this.nombreEquipo2 = nombreEquipo2;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
 }
