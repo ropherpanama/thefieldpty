@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/wine_gradient"
     android:orientation="vertical"
     android:padding="10dp" >
 
@@ -10,6 +11,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingLeft="24dp"
-        android:textSize="16sp" />
+        android:shadowColor="#000000"
+        android:shadowDx="1"
+        android:shadowDy="1"
+        android:shadowRadius="0.3"
+        android:textColor="@color/app_white"
+        android:textSize="22sp" />
 
 </RelativeLayout>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="app_white">#ffffff</color>
+    <color name="wine_strong">#4D0000</color>
+    <color name="wine_mid">#7A0029</color>
+    <color name="wine_slow">#BC8094</color>
+    <color name="yellow_mid">#fcb734</color>
+    <color name="orange">#c68003</color>
+    <color name="brown">#8a4b08</color>
+</resources>

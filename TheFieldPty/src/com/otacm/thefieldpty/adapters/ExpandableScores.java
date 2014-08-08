@@ -72,6 +72,7 @@ public class ExpandableScores extends BaseExpandableListAdapter {
 
 		TextView textEquipo1 = (TextView) convertView.findViewById(R.id.textEquipo1);
 		textEquipo1.setText(group.getNombreEquipo1());
+		textEquipo1.setTypeface(AppUtils.outlineFont(context)); 
 		
 		int id_drawable_1 = AppUtils.getDrawableByName(context, group.getNombreEquipo1().trim().toLowerCase().replace(" ", ""));
 		int id_drawable_2 = AppUtils.getDrawableByName(context, group.getNombreEquipo2().trim().toLowerCase().replace(" ", ""));
@@ -83,6 +84,7 @@ public class ExpandableScores extends BaseExpandableListAdapter {
 		
 		TextView textEquipo2 = (TextView) convertView.findViewById(R.id.textEquipo2);
 		textEquipo2.setText(group.getNombreEquipo2());
+		textEquipo2.setTypeface(AppUtils.outlineFont(context)); 
 		
 		if(id_drawable_2 == 0)
 			textEquipo2.setCompoundDrawablesWithIntrinsicBounds(AppUtils.getDrawableByName(context, "default_logo"),0,0,0);
@@ -91,6 +93,7 @@ public class ExpandableScores extends BaseExpandableListAdapter {
 		
 		TextView textStatus = (TextView) convertView.findViewById(R.id.textStatus);
 		textStatus.setText(group.getStatus());
+		textEquipo2.setTypeface(AppUtils.normalFont(context)); 
 		
 
 		return convertView;

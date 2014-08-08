@@ -8,6 +8,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 
 import android.content.Context;
+import android.graphics.Typeface;
 
 public class AppUtils {
 
@@ -50,5 +51,13 @@ public class AppUtils {
 		String name = "ic_" + str.replace(".", "_");
 		System.out.println("Buscando drawable llamado : " + name);
 		return ctx.getResources().getIdentifier(name, "drawable", ctx.getPackageName());
+	}
+	
+	public static Typeface normalFont(Context ctx) {
+		return Typeface.createFromAsset(ctx.getAssets(), "ParmaPetit-Normal.ttf");
+	}
+	
+	public static Typeface outlineFont(Context ctx) {
+		return Typeface.createFromAsset(ctx.getAssets(), "ParmaPetitOutline.ttf");
 	}
 }

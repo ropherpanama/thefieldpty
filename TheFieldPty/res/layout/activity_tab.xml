@@ -10,6 +10,7 @@
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/texture_cesped"
         android:orientation="vertical" >
 
         <TabHost
@@ -25,7 +26,8 @@
                 <TabWidget
                     android:id="@android:id/tabs"
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/yellow_gradient" />
 
                 <FrameLayout
                     android:id="@android:id/tabcontent"
@@ -56,11 +58,26 @@
                         android:layout_height="match_parent"
                         android:orientation="vertical" >
 
-                        <Button
-                            android:layout_width="fill_parent"
+                        <TextView
+                            android:id="@+id/textStatus"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginRight="3dp"
-                            android:text="Tab 2" />
+                            android:layout_gravity="center_horizontal|center_vertical"
+                            android:textSize="16sp" />
+
+                        <Button
+                            android:id="@+id/buttonAddFavs"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal|center_vertical"
+                            android:onClick="mostrarEquiposDisponibles"
+                            android:text="Añadir"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/textDetail"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -77,15 +94,14 @@
 
                     <LinearLayout
                         android:id="@+id/tabNoticias"
-                        android:layout_width="fill_parent"
+                        android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="vertical" >
 
-                        <Button
-                            android:layout_width="fill_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginRight="3dp"
-                            android:text="Tab 4" />
+                        <WebView
+                            android:id="@+id/webView"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent" />
                     </LinearLayout>
                 </FrameLayout>
             </LinearLayout>

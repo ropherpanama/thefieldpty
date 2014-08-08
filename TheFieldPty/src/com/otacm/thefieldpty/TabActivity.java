@@ -3,22 +3,30 @@ package com.otacm.thefieldpty;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.SparseArray;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.webkit.WebView;
 import android.widget.ExpandableListView;
 import android.widget.TabHost;
+import android.widget.TextView;
 import android.widget.TabHost.OnTabChangeListener;
+
 import com.example.sample.R;
 import com.google.gson.reflect.TypeToken;
 import com.otacm.thefieldpty.adapters.ExpandableListAdapter;
 import com.otacm.thefieldpty.adapters.ExpandableScores;
+import com.otacm.thefieldpty.database.beans.Favoritos;
+import com.otacm.thefieldpty.database.daos.FavoritosDAO;
 import com.otacm.thefieldpty.groups.GroupLigas;
 import com.otacm.thefieldpty.groups.GroupScores;
 import com.otacm.thefieldpty.json.JSONUtils;
@@ -33,9 +41,8 @@ import com.otacm.thefieldpty.utils.Fechas;
 public class TabActivity extends ActionBarActivity {
 	private ExpandableListView expandable_list_ligas;
 	private ExpandableListView expandableListScores;
-//	private StringBuilder jsonLigas;
-//	private StringBuilder jsonCategorias;
-	
+	private TextView textStatus;
+	private TextView textDetail;
 	private Context ctx = this;
 	private SparseArray<GroupLigas> groups = new SparseArray<GroupLigas>();
 	private SparseArray<GroupScores> groupScores = new SparseArray<GroupScores>();
@@ -48,15 +55,23 @@ public class TabActivity extends ActionBarActivity {
 		expandable_list_ligas = (ExpandableListView) findViewById(R.id.expandable_list_ligas);
 		expandableListScores  = (ExpandableListView) findViewById(R.id.expandableListScores);
 		
+		//Componentes del tab de my teams
+		textStatus = (TextView) findViewById(R.id.textStatus);
+		textDetail = (TextView) findViewById(R.id.textDetail);
+		
 		createTabHost();
 		
 		createExpandableData();
 		final ExpandableListAdapter expListAdapter = new ExpandableListAdapter((Activity) ctx, groups);
         expandable_list_ligas.setAdapter(expListAdapter);
         
+        cargarTabFavoritos();
+        
         cargarTabScores();
 		final ExpandableScores expSc = new ExpandableScores((Activity) ctx, groupScores);
-		expandableListScores.setAdapter(expSc); 
+		expandableListScores.setAdapter(expSc);
+		
+		cargarTabNoticias();
 	}
 
 	@Override
@@ -107,7 +122,10 @@ public class TabActivity extends ActionBarActivity {
 				public void onTabChanged(String tabId) {
 					InputMethodManager inputMethodManager = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
 					inputMethodManager.hideSoftInputFromWindow(tabHost.getWindowToken(), 0);
-					if (tabId.equals("some text in the tab header")) {
+					System.out.println("TAB ID : " + tabId);
+					
+					if (tabId.equals("Noticias")) {
+						
 					} else if (tabId.equals("some text in the tab header")) {
 					}
 				}
@@ -117,6 +135,15 @@ public class TabActivity extends ActionBarActivity {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	/**
+	 * Evento para desplegar la pantalla de seleccion de favoritos
+	 * @param v
+	 */
+	public void mostrarEquiposDisponibles(View v){
+		Intent i = new Intent(TabActivity.this, SelectFavsActivity.class);
+		startActivity(i);
 	}
 	
 	/**
@@ -151,6 +178,25 @@ public class TabActivity extends ActionBarActivity {
 	}
 	
 	/**
+	 * CARGA EL SEGUNDO TAB (MY TEAMS)
+	 */
+	public void cargarTabFavoritos() {
+		FavoritosDAO dao = new FavoritosDAO(getApplicationContext());
+		List<Favoritos> l = dao.getAll();
+		
+		if(l.size() == 0) {
+			textStatus.setText("No has cargado favoritos"); 
+		}else {
+			textStatus.setText("Tus favoritos");
+			String texto = "";
+			for(Favoritos f : l) {
+				texto += f.getNombre() + "\n";
+			}
+			textDetail.setText(texto);
+		}
+	}
+	
+	/**
 	 * TERCER TAB (SCORES)
 	 * Carga la informacion del tercer tab
 	 */
@@ -161,26 +207,24 @@ public class TabActivity extends ActionBarActivity {
 			List<Scores> scores = JSONUtils.factoryGson().fromJson(jsonScores.toString(), typeScores);
 			groupScores.clear();
 			int cont = 0; 
+			boolean hasPts = false;
 			
 			for(Scores sc : scores) {
 				Calendario c = new Calendario();
 				c = PartidoServicio.getPartidoById(getApplicationContext(), sc.getIdPartido());
 				GroupScores g = new GroupScores();
-				String strTemp = "";
+//				String strTemp = "";
 				
 				g.setNombreEquipo1(sc.getNomEquipo1());
 				g.setNombreEquipo2(sc.getNomEquipo2());
 				
-				if(sc.getPeriodos().size() > 0) {
-					
-					for(String s : sc.getPeriodos())
-						strTemp = strTemp + s + "\n";  
-				}
+				if(sc.getPeriodos().size() > 0)
+					hasPts = true;
 				
-				if(strTemp.length() > 0)
-					g.setTeamsMatch(strTemp);
+				if(hasPts)
+					g.setTeamsMatch(sc.getTotalPtsEquipo1() + " - " + sc.getTotalPtsEquipo2()); 
 				else 
-					g.setTeamsMatch("No hay puntajes para este partido");
+					g.setTeamsMatch("* - *");
 				
 				long dias = Fechas.diasEntreDosFecha(Fechas.fechahoy(), Fechas.string2Date(c.getFecha(), Fechas.DDMMYYYYGUION));
 				//Solo muestro los partidos para hoy 
@@ -205,4 +249,14 @@ public class TabActivity extends ActionBarActivity {
 			e.printStackTrace();
 		}
 	}
+	
+	/**
+	 * CARGA EL CUARTO TAB (NOTICIAS)
+	 */
+	public void cargarTabNoticias() {
+		WebView myWebView = (WebView) this.findViewById(R.id.webView);
+		myWebView.getSettings().setUserAgentString("Mozilla/5.0 (iPhone; U; CPU like Mac OS X; en) AppleWebKit/420+ (KHTML, like Gecko) Version/3.0 Mobile/1A543a Safari/419.3");
+        myWebView.loadUrl("https://twitter.com/TheFieldpty");
+	}
 }
+

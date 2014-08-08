@@ -8,10 +8,26 @@ public class Scores {
 	private String nomEquipo1;
 	private String nomEquipo2;
 	private ArrayList<String> periodos;
-//	private int ptsEquipo1;
-//	private int ptsEquipo2;
+	private int totalPtsEquipo1;
+	private int totalPtsEquipo2;
 //	private int numPeriodo;
 	private int idPartido;
+
+	public int getTotalPtsEquipo1() {
+		return totalPtsEquipo1;
+	}
+
+	public void setTotalPtsEquipo1(int totalPtsEquipo1) {
+		this.totalPtsEquipo1 = totalPtsEquipo1;
+	}
+
+	public int getTotalPtsEquipo2() {
+		return totalPtsEquipo2;
+	}
+
+	public void setTotalPtsEquipo2(int totalPtsEquipo2) {
+		this.totalPtsEquipo2 = totalPtsEquipo2;
+	}
 
 	public String getLiga() {
 		return liga;

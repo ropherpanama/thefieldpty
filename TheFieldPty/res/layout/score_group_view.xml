@@ -10,7 +10,12 @@
         android:layout_height="wrap_content"
         android:drawableLeft="@drawable/ic_launcher"
         android:paddingLeft="24dp"
-        android:textSize="16sp" />
+        android:textSize="22sp"
+        android:shadowColor="#000000"
+        android:shadowDx="1"
+        android:shadowDy="1"
+        android:shadowRadius="0.3"
+        android:textColor="@color/app_white" />
 
     <TextView
         android:id="@+id/textEquipo2"
@@ -19,7 +24,12 @@
         android:layout_below="@+id/textEquipo1"
         android:drawableLeft="@drawable/ic_launcher"
         android:paddingLeft="24dp"
-        android:textSize="16sp" />
+        android:textSize="22sp"
+        android:shadowColor="#000000"
+        android:shadowDx="1"
+        android:shadowDy="1"
+        android:shadowRadius="0.3"
+        android:textColor="@color/app_white" />
 
     <TextView
         android:id="@+id/textStatus"
@@ -28,6 +38,11 @@
         android:layout_alignBaseline="@+id/textEquipo1"
         android:layout_alignBottom="@+id/textEquipo1"
         android:layout_alignParentRight="true"
-        android:textSize="12sp" />
+        android:textSize="16sp"
+        android:shadowColor="#000000"
+        android:shadowDx="1"
+        android:shadowDy="1"
+        android:shadowRadius="0.3"
+        android:textColor="@color/app_white" />
 
 </RelativeLayout>

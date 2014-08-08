@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.example.sample.R;
 import com.otacm.thefieldpty.FirstTabChildActivity;
 import com.otacm.thefieldpty.groups.GroupLigas;
+import com.otacm.thefieldpty.utils.AppUtils;
 
 public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
@@ -66,21 +67,18 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 	 * Realiza el setup de los nodos padres (Ligas)
 	 */
 	@Override
-	public View getGroupView(int groupPosition, boolean isExpanded,
-			View convertView, ViewGroup parent) {
+	public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
 		GroupLigas group = (GroupLigas) getGroup(groupPosition);
 		nombreLiga = group.getString();
 
 		if (convertView == null) {
-			LayoutInflater infalInflater = (LayoutInflater) context
-					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			convertView = infalInflater
-					.inflate(R.layout.ligas_group_view, null);
+			LayoutInflater infalInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			convertView = infalInflater.inflate(R.layout.ligas_group_view, null);
 		}
 
-		TextView textoNombreLiga = (TextView) convertView
-				.findViewById(R.id.textoNombreLiga);
+		TextView textoNombreLiga = (TextView) convertView.findViewById(R.id.textoNombreLiga);
 		textoNombreLiga.setText(nombreLiga);
+		textoNombreLiga.setTypeface(AppUtils.outlineFont(context)); 
 
 		return convertView;
 	}
@@ -89,20 +87,18 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 	 * Realiza el setup de los hijos de cada item (categorias)
 	 */
 	@Override
-	public View getChildView(int groupPosition, int childPosition,
-			boolean isLastChild, View convertView, ViewGroup parent) {
+	public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
 		final String children = (String) getChild(groupPosition, childPosition);
 		final GroupLigas group = (GroupLigas) getGroup(groupPosition);
 		LayoutInflater inflater = context.getLayoutInflater();
 
 		if (convertView == null) {
-			convertView = inflater
-					.inflate(R.layout.categorias_child_view, null);
+			convertView = inflater.inflate(R.layout.categorias_child_view, null);
 		}
 
-		textViewChildItem = (TextView) convertView
-				.findViewById(R.id.textViewChildItem);
+		textViewChildItem = (TextView) convertView.findViewById(R.id.textViewChildItem);
 		textViewChildItem.setText(children);
+		textViewChildItem.setTypeface(AppUtils.normalFont(context)); 
 
 		convertView.setOnClickListener(new OnClickListener() {
 			@Override
