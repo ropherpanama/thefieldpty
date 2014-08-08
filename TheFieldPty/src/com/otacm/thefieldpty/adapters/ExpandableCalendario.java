@@ -3,9 +3,11 @@ package com.otacm.thefieldpty.adapters;
 import com.example.sample.R;
 import com.otacm.thefieldpty.groups.GroupCalendario;
 import com.otacm.thefieldpty.utils.AppUtils;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Typeface;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,11 +21,12 @@ public class ExpandableCalendario extends BaseExpandableListAdapter {
 //	private String encabezado;
 	private SparseArray<com.otacm.thefieldpty.groups.GroupCalendario> groups;
 	private TextView textViewChildCalendario;
+	private Typeface font;
 
-	public ExpandableCalendario(Activity context,
-			SparseArray<com.otacm.thefieldpty.groups.GroupCalendario> groups) {
+	public ExpandableCalendario(Activity context, SparseArray<com.otacm.thefieldpty.groups.GroupCalendario> groups) {
 		this.context = context;
 		this.groups = groups;
+		font = AppUtils.normalFont(context);
 	}
 
 	@Override
@@ -80,9 +83,11 @@ public class ExpandableCalendario extends BaseExpandableListAdapter {
 		
 		TextView textoEquipo1 = (TextView) convertView.findViewById(R.id.textoEquipo1);
 		textoEquipo1.setText(group.getEquipo1());
+		textoEquipo1.setTypeface(font);
 		
 		TextView textoEquipo2 = (TextView) convertView.findViewById(R.id.textoEquipo2);
 		textoEquipo2.setText(group.getEquipo2());
+		textoEquipo2.setTypeface(font); 
 		
 		if(id_drawable_1 == 0)
 			textoEquipo1.setCompoundDrawablesWithIntrinsicBounds(AppUtils.getDrawableByName(context, "default_logo"),0,0,0);
@@ -101,20 +106,17 @@ public class ExpandableCalendario extends BaseExpandableListAdapter {
 	 * Realiza el setup de los hijos de cada item (categorias)
 	 */
 	@Override
-	public View getChildView(int groupPosition, int childPosition,
-			boolean isLastChild, View convertView, ViewGroup parent) {
+	public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
 		// GroupCalendario group = (GroupCalendario) getGroup(groupPosition);
 		GroupCalendario group = groups.valueAt(groupPosition);
 		final String children = group.getDetallePartido();
 		LayoutInflater inflater = context.getLayoutInflater();
 
 		if (convertView == null) {
-			convertView = inflater
-					.inflate(R.layout.calendario_child_view, null);
+			convertView = inflater.inflate(R.layout.calendario_child_view, null);
 		}
 
-		textViewChildCalendario = (TextView) convertView
-				.findViewById(R.id.textViewChildCalendario);
+		textViewChildCalendario = (TextView) convertView.findViewById(R.id.textViewChildCalendario);
 		textViewChildCalendario.setText(children);
 
 		return convertView;

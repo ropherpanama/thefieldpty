@@ -25,7 +25,8 @@
                 <TabWidget
                     android:id="@android:id/tabs"
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/yellow_gradient" />
 
                 <FrameLayout
                     android:id="@android:id/tabcontent"
@@ -50,18 +51,48 @@
                         </ExpandableListView>
                     </LinearLayout>
 
-                    <LinearLayout
+                    <RelativeLayout
                         android:id="@+id/tabMyTeams"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical" >
+                        android:layout_height="match_parent" >
+
+                        <TextView
+                            android:id="@+id/textStatus"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal|center_vertical"
+                            android:layout_marginTop="5dp"
+                            android:shadowColor="#000000"
+                            android:shadowDx="1"
+                            android:shadowDy="1"
+                            android:shadowRadius="0.3"
+                            android:textColor="@color/orange"
+                            android:textSize="18sp" />
 
                         <Button
-                            android:layout_width="fill_parent"
+                            android:id="@+id/buttonAddFavs"
+                            style="@style/btnStylePlain"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginLeft="15dp"
+                            android:layout_marginRight="5dp"
+                            android:layout_toRightOf="@+id/textStatus"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginRight="3dp"
-                            android:text="Tab 2" />
-                    </LinearLayout>
+                            android:layout_gravity="center_horizontal|center_vertical"
+                            android:onClick="mostrarEquiposDisponibles"
+                            android:text="@string/add"
+                            android:textSize="16sp" />
+
+                        <ListView
+                            android:id="@+id/equipos_favoritos"
+							android:layout_marginTop="15dp"
+                            android:layout_below="@+id/textStatus"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:cacheColorHint="#00000000" >
+                        </ListView>
+                    </RelativeLayout>
 
                     <LinearLayout
                         android:id="@+id/tabScores"
@@ -77,15 +108,14 @@
 
                     <LinearLayout
                         android:id="@+id/tabNoticias"
-                        android:layout_width="fill_parent"
+                        android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="vertical" >
 
-                        <Button
-                            android:layout_width="fill_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginRight="3dp"
-                            android:text="Tab 4" />
+                        <WebView
+                            android:id="@+id/webView"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent" />
                     </LinearLayout>
                 </FrameLayout>
             </LinearLayout>

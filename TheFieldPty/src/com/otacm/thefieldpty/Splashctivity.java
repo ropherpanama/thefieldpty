@@ -90,6 +90,11 @@ public class Splashctivity extends Activity {
 				AppUtils.writeJsonOnDisk(getApplicationContext(), "scores", new StringBuilder(scoresData));
 				scoresData = null;
 				
+				//Escribo en disco tambien el json de los equipos
+				String equiposData = new Scanner(streams.get(4)).useDelimiter("\\A").next(); 
+				AppUtils.writeJsonOnDisk(getApplicationContext(), "equipos", new StringBuilder(equiposData));
+				equiposData = null;
+				
 				return true;
 			}catch(Exception e){
 				progressDialog.dismiss();

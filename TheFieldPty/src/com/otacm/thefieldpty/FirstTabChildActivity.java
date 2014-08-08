@@ -88,18 +88,15 @@ public class FirstTabChildActivity extends ActionBarActivity {
 	 */
 	private void createTabHost() {
 		try {
-//			Resources resources = getResources();
 			final TabHost tabHost = (TabHost)findViewById(android.R.id.tabhost);
 			tabHost.setup();
 
 			TabHost.TabSpec spec = tabHost.newTabSpec("Calendario");
 			spec.setContent(R.id.tabCalendario);
-			//spec.setIndicator("Calendario", resources.getDrawable(R.drawable.abc_ic_go));
 			spec.setIndicator("Calendario");
 			tabHost.addTab(spec);
 			spec = tabHost.newTabSpec("Posiciones");
 			spec.setContent(R.id.tabPosiciones);
-			//spec.setIndicator("", resources.getDrawable(R.drawable.abc_ic_clear));
 			spec.setIndicator("Tabla de posiciones");
 			tabHost.addTab(spec);
 

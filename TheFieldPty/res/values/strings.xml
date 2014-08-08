@@ -7,7 +7,7 @@
     <string name="title_section3">Scores</string>
     <string name="title_section4">Noticias</string>
     <string name="action_settings">Settings</string>
-    <string name="host_webservices">http://192.168.2.4:8080/thefieldpanama/services/app/</string>
+    <string name="host_webservices">http://54.191.104.119:8080/thefieldpanama/services/app/</string>
     <string name="error_http_request">"No podemos actualizar la información, inténtelo más tarde"</string>
     <string name="data_actualizada">"Datos actualizados en %1$d mscs."</string>
     <string name="title_activity_first_tab_child">Detalles</string>
@@ -16,5 +16,7 @@
     <string name="score_detail">%1$s %2$d Estado\n%3$s %4$d</string>
     <string name="title_activity_splashctivity">The Field PTY</string>
     <string name="hello_world">Hello world!</string>
-
+    <string name="title_activity_select_favs">Seleccionar favoritos</string>
+    <string name="equipos_disponibles">Equipos disponibles</string>
+    <string name="add">Añadir</string>
 </resources>

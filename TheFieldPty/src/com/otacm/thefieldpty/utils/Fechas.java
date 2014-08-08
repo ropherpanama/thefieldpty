@@ -127,6 +127,7 @@ public class Fechas {
 			
 			return answer;
 		} catch (Exception e) {
+			e.printStackTrace();
 			return -1;
 		}
 	}
