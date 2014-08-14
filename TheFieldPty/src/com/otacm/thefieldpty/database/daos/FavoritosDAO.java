@@ -10,8 +10,10 @@ import android.database.Cursor;
 import com.otacm.thefieldpty.database.DataBaseHelper;
 import com.otacm.thefieldpty.database.DataSource;
 import com.otacm.thefieldpty.database.beans.Favoritos;
+import com.otacm.thefieldpty.utils.Reporter;
 
 public class FavoritosDAO extends DataSource{
+	private Reporter log = Reporter.getInstance();
 	public String [] allColumns = {
 			DataBaseHelper.COLUMN_TABLE_FAVORITOS_ID,
 			DataBaseHelper.COLUMN_TABLE_FAVORITOS_NOMBRE
@@ -31,7 +33,7 @@ public class FavoritosDAO extends DataSource{
 			System.out.println("Favorito guardado");
 			return 1;
 		}catch (Exception e) {
-			e.printStackTrace();
+			log.error(Reporter.stringStackTrace(e));
 			close();
 			return -1;
 		}
@@ -44,7 +46,7 @@ public class FavoritosDAO extends DataSource{
 			close();
 			return 1;
 		}catch(Exception e) {
-			e.printStackTrace();
+			log.error(Reporter.stringStackTrace(e));
 			return -1;
 		}
 	}
@@ -66,7 +68,7 @@ public class FavoritosDAO extends DataSource{
 			close();
 			return l;
 		}catch(Exception e) {
-			e.printStackTrace();
+			log.error(Reporter.stringStackTrace(e));
 			close();
 			return null;
 		}

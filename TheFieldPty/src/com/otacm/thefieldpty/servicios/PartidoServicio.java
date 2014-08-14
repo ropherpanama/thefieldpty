@@ -10,9 +10,12 @@ import com.google.gson.reflect.TypeToken;
 import com.otacm.thefieldpty.json.JSONUtils;
 import com.otacm.thefieldpty.json.beans.Calendario;
 import com.otacm.thefieldpty.utils.AppUtils;
+import com.otacm.thefieldpty.utils.Reporter;
 
 public class PartidoServicio {
 
+	private static Reporter log = Reporter.getInstance();
+	
 	public static List<Integer> getIdPartidos(Context ctx) {
 		StringBuilder jsonCalendario = AppUtils.getJsonFromDisk(ctx,
 				"calendario");
@@ -62,7 +65,7 @@ public class PartidoServicio {
 			
 			return retorno; 
 		}catch(Exception e){
-			e.printStackTrace();
+			log.error(Reporter.stringStackTrace(e));
 			return null;
 		}
 	}

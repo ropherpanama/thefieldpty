@@ -3,6 +3,7 @@ package com.otacm.thefieldpty;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
@@ -24,6 +25,7 @@ import android.widget.ListView;
 import android.widget.TabHost;
 import android.widget.TabHost.OnTabChangeListener;
 import android.widget.TextView;
+
 import com.example.sample.R;
 import com.google.gson.reflect.TypeToken;
 import com.otacm.thefieldpty.adapters.ExpandableListAdapter;
@@ -41,6 +43,7 @@ import com.otacm.thefieldpty.json.beans.Scores;
 import com.otacm.thefieldpty.servicios.PartidoServicio;
 import com.otacm.thefieldpty.utils.AppUtils;
 import com.otacm.thefieldpty.utils.Fechas;
+import com.otacm.thefieldpty.utils.Reporter;
 
 public class TabActivity extends ActionBarActivity {
 	private ExpandableListView expandable_list_ligas;
@@ -54,6 +57,7 @@ public class TabActivity extends ActionBarActivity {
 	private ListView equipos_favoritos;
 	private List<Favoritos> favoritos;
 	private ArrayAdapter<Favoritos> arrayAdapter;
+	private Reporter log = Reporter.getInstance();
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -153,7 +157,7 @@ public class TabActivity extends ActionBarActivity {
 
 			tabHost.setCurrentTab(0);
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.error(Reporter.stringStackTrace(e));
 		}
 	}
 	
@@ -265,7 +269,7 @@ public class TabActivity extends ActionBarActivity {
 			}
 			
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.error(Reporter.stringStackTrace(e));
 		}
 	}
 	

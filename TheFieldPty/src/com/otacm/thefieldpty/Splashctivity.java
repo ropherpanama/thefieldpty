@@ -21,10 +21,12 @@ import android.widget.Toast;
 import com.example.sample.R;
 import com.otacm.thefieldpty.http.HTTPTasks;
 import com.otacm.thefieldpty.utils.AppUtils;
+import com.otacm.thefieldpty.utils.Reporter;
 
 public class Splashctivity extends Activity {
 	private static final int SEGUNDOS = 1000;
 	private ProgressBar progressBar;
+	private Reporter log = Reporter.getInstance();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -98,7 +100,7 @@ public class Splashctivity extends Activity {
 				return true;
 			}catch(Exception e){
 				progressDialog.dismiss();
-				e.printStackTrace();
+				log.error(Reporter.stringStackTrace(e));
 				return false;
 			}
 		}

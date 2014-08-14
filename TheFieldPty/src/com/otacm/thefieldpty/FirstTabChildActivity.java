@@ -2,7 +2,6 @@ package com.otacm.thefieldpty;
 
 import java.lang.reflect.Type;
 import java.util.List;
-
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -21,12 +20,14 @@ import com.otacm.thefieldpty.groups.GroupCalendario;
 import com.otacm.thefieldpty.json.JSONUtils;
 import com.otacm.thefieldpty.json.beans.Calendario;
 import com.otacm.thefieldpty.utils.AppUtils;
+import com.otacm.thefieldpty.utils.Reporter;
 public class FirstTabChildActivity extends ActionBarActivity {
 
 	private String parent;
 	private String children;
 	private SparseArray<GroupCalendario> groups = new SparseArray<GroupCalendario>();
 	private ExpandableListView expandable_list_partidos;
+	private Reporter log = Reporter.getInstance();
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -79,7 +80,7 @@ public class FirstTabChildActivity extends ActionBarActivity {
 				cont++;
 			}
 		}catch(Exception e) {
-			e.printStackTrace();
+			log.error(Reporter.stringStackTrace(e));
 		}
 	}
 	
@@ -113,7 +114,7 @@ public class FirstTabChildActivity extends ActionBarActivity {
 
 			tabHost.setCurrentTab(0);
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.error(Reporter.stringStackTrace(e));
 		}
 	}
 }

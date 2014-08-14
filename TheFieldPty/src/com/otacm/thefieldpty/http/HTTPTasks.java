@@ -4,8 +4,11 @@ import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
 
+import com.otacm.thefieldpty.utils.Reporter;
+
 public class HTTPTasks {
 	
+	private static Reporter log = Reporter.getInstance();
 	/**
 	 * Este metodo busca en el contenido json en el servidor (ejecuta un http request)
 	 * @param _url direccion web del servicio a consumir
@@ -17,7 +20,7 @@ public class HTTPTasks {
 			URLConnection urlConnection = url.openConnection();
 			return urlConnection.getInputStream();
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.error(Reporter.stringStackTrace(e));
 			return null;
 		}
 	}

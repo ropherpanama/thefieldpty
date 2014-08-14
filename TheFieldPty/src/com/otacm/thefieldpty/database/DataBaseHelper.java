@@ -1,5 +1,7 @@
 package com.otacm.thefieldpty.database;
 
+import com.otacm.thefieldpty.utils.Reporter;
+
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -10,6 +12,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 	public static final String TABLE_FAVORITOS_NAME = "favoritos";
 	public static final String COLUMN_TABLE_FAVORITOS_ID = "id";
 	public static final String COLUMN_TABLE_FAVORITOS_NOMBRE = "nombre";
+	private Reporter log = Reporter.getInstance();
 	
 	private static final String CREATE_FAVORITOS = "create table " 
 			+ TABLE_FAVORITOS_NAME
@@ -27,7 +30,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 		try {
 			db.execSQL(CREATE_FAVORITOS);
 		}catch(Exception e) {
-			e.printStackTrace();
+			log.error(Reporter.stringStackTrace(e));
 		}
 	}
 	
@@ -37,7 +40,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 			db.execSQL("DROP TABLE IF EXISTS " + TABLE_FAVORITOS_NAME);
 			onCreate(db); 
 		}catch(Exception e) {
-			e.printStackTrace();
+			log.error(Reporter.stringStackTrace(e));
 		}
 	}	
 }

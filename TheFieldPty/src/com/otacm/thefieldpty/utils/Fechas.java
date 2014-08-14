@@ -1,6 +1,7 @@
 package com.otacm.thefieldpty.utils;
 
 import android.annotation.SuppressLint;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -20,6 +21,7 @@ public class Fechas {
 	public static final String YYYYMMDDHORA = "yyyyMMdd HH:mm:ss";
 	public static final String YYYYMMDD = "yyyyMMdd";
 	public static SimpleDateFormat formatter = new SimpleDateFormat();
+	private static final Reporter log = Reporter.getInstance();
 	/**
 	 * Convierte un java.util.Date a un java.sql.Date
 	 * 
@@ -39,6 +41,15 @@ public class Fechas {
 		java.util.Date now = new java.util.Date();
 		java.sql.Date sqlDate = new java.sql.Date(now.getTime());
 		return sqlDate;
+	}
+	
+	@SuppressLint("SimpleDateFormat")
+	public static String fechahoy(String formato) {
+		Date date = new Date();
+        StringBuilder fechahoy;
+        SimpleDateFormat YYYYMMDD = new SimpleDateFormat(formato);
+        fechahoy = new StringBuilder(YYYYMMDD.format(date));
+		return fechahoy.toString();
 	}
 
 	/**
@@ -101,7 +112,7 @@ public class Fechas {
 			System.out.println(formatter.format(date));
 			return date;
 		} catch (ParseException e) {
-			e.printStackTrace();
+			log.error(Reporter.stringStackTrace(e));
 			return null;
 		}
 	}
@@ -127,7 +138,7 @@ public class Fechas {
 			
 			return answer;
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.error(Reporter.stringStackTrace(e));
 			return -1;
 		}
 	}

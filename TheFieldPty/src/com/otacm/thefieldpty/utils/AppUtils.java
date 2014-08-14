@@ -3,15 +3,15 @@ package com.otacm.thefieldpty.utils;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
-
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
-
 import android.content.Context;
 import android.graphics.Typeface;
 
 public class AppUtils {
 
+	private static final Reporter log = Reporter.getInstance();
+	
 	public static void writeJsonOnDisk(Context context, String fileName,
 			StringBuilder bigStr) {
 		try {
@@ -21,7 +21,7 @@ public class AppUtils {
 			Filewriter.write(bigStr.toString());
 			Filewriter.close();
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.error(Reporter.stringStackTrace(e));
 		}
 	}
 
@@ -35,7 +35,7 @@ public class AppUtils {
 					.toString());
 			return data;
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.error(Reporter.stringStackTrace(e));
 			return null;
 		}
 	}
