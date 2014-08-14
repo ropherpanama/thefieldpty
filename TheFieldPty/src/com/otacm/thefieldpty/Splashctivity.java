@@ -66,6 +66,8 @@ public class Splashctivity extends Activity {
 				Resources res = getResources();
 				String[] webservices = res.getStringArray(R.array.servicios_web);
 				
+				log.write("Inciando descarga de datos");
+				
 				for(int i = 0; i < webservices.length; i++) {
 					InputStream in =  HTTPTasks.getJsonFromServer(getString(R.string.host_webservices) + webservices[i]);
 					if(in == null)
@@ -73,6 +75,8 @@ public class Splashctivity extends Activity {
 					else
 						streams.add(in);
 				}
+				
+				log.write("Termina descarga de datos");
 				
 				String ligasData = new Scanner(streams.get(0)).useDelimiter("\\A").next(); 
 				AppUtils.writeJsonOnDisk(getApplicationContext(), "ligas", new StringBuilder(ligasData));
