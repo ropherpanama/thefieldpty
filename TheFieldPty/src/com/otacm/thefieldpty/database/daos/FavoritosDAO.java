@@ -80,4 +80,16 @@ public class FavoritosDAO extends DataSource{
 		f.setNombre(c.getString(1));
 		return f;
 	}
+	
+	public boolean deleteByIds(String ids) {
+		try {
+			open();
+			getDatabase().delete(DataBaseHelper.TABLE_FAVORITOS_NAME, DataBaseHelper.COLUMN_TABLE_FAVORITOS_ID + " in (" + ids + ")", null);
+			close();
+			return true;
+		}catch(Exception e) {
+			log.error(Reporter.stringStackTrace(e));
+			return false;
+		}
+	}
 }

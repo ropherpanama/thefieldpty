@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/gray_gradient"
+    android:background="@drawable/gray_gradient_yellow_stroke"
     android:orientation="vertical"
     android:padding="10dp" >
 
@@ -15,7 +15,7 @@
         android:shadowDx="1"
         android:shadowDy="1"
         android:shadowRadius="0.3"
-        android:textColor="@color/orange"
-        android:textSize="20sp" />
+        android:textColor="@color/yellow_mid"
+        android:textSize="18sp" />
 
 </RelativeLayout>

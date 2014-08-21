@@ -19,4 +19,7 @@
     <string name="title_activity_select_favs">Seleccionar favoritos</string>
     <string name="equipos_disponibles">Equipos disponibles</string>
     <string name="add">Añadir</string>
+    <string name="del">Borrar</string>
+    <string name="no_favs_del">Nada para borrar</string>
+    <string name="favs_deleted">Borrado</string>
 </resources>

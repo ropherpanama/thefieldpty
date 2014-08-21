@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.TextView;
-
 import com.example.sample.R;
 import com.otacm.thefieldpty.database.beans.Favoritos;
 import com.otacm.thefieldpty.utils.AppUtils;
@@ -60,6 +59,13 @@ public class FavoritosAdapter extends ArrayAdapter<Favoritos>{
 		textHeader.setText(f.getNombre());
 		checkbox.setTag(f);
 		checkbox.setChecked(f.isSelected());
+		
+		int id_drawable = AppUtils.getDrawableByName(context, f.getNombre().trim().toLowerCase().replace(" ", ""));
+		
+		if(id_drawable == 0)
+			textHeader.setCompoundDrawablesWithIntrinsicBounds(AppUtils.getDrawableByName(context, "default_logo"), 0, 0, 0);
+		else
+			textHeader.setCompoundDrawablesWithIntrinsicBounds(id_drawable, 0, 0, 0); 
 		
 		return convertView;
 	}

@@ -12,6 +12,11 @@
         android:layout_height="wrap_content"
         android:drawableLeft="@drawable/ic_9erswomen"
         android:paddingLeft="24dp"
+        android:shadowColor="#000000"
+        android:shadowDx="1"
+        android:shadowDy="1"
+        android:shadowRadius="0.3"
+        android:textColor="@color/yellow_mid"
         android:textSize="16sp" />
 
     <TextView
@@ -20,6 +25,11 @@
         android:layout_height="wrap_content"
         android:drawableLeft="@drawable/ic_cardinals"
         android:paddingLeft="24dp"
+        android:shadowColor="#000000"
+        android:shadowDx="1"
+        android:shadowDy="1"
+        android:shadowRadius="0.3"
+        android:textColor="@color/yellow_mid"
         android:textSize="16sp" />
 
 </LinearLayout>

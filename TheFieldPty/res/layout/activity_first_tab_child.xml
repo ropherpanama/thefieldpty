@@ -38,8 +38,8 @@
                         android:layout_height="match_parent"
                         android:orientation="vertical" >
 
-                        <ExpandableListView
-                            android:id="@+id/expandable_list_partidos"
+                        <ListView
+                            android:id="@+id/list_partidos"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_marginBottom="3dp"
@@ -47,7 +47,7 @@
                             android:layout_marginRight="3dp"
                             android:layout_marginTop="3dp"
                             android:background="#FFFFFF" >
-                        </ExpandableListView>
+                        </ListView>
                         
                     </LinearLayout>
 

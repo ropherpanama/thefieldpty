@@ -9,14 +9,16 @@
         android:id="@+id/textEquipo1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_toLeftOf="@+id/textStatus"
         android:drawableLeft="@drawable/ic_launcher"
-        android:paddingLeft="30dp"
-        android:textSize="18sp"
+        android:paddingLeft="2dp"
         android:shadowColor="#000000"
         android:shadowDx="1"
         android:shadowDy="1"
         android:shadowRadius="0.3"
-        android:textColor="@color/yellow_mid" />
+        android:textColor="@color/yellow_mid"
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/textEquipo2"
@@ -24,23 +26,52 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/textEquipo1"
         android:drawableLeft="@drawable/ic_launcher"
-        android:paddingLeft="30dp"
-        android:textSize="18sp"
+        android:paddingLeft="2dp"
         android:shadowColor="#000000"
         android:shadowDx="1"
         android:shadowDy="1"
         android:shadowRadius="0.3"
-        android:textColor="@color/yellow_mid" />
+        android:textColor="@color/yellow_mid"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/textPts1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginLeft="2sp"
+        android:layout_marginRight="2sp"
+        android:shadowColor="#000000"
+        android:shadowDx="1"
+        android:shadowDy="1"
+        android:shadowRadius="0.3"
+        android:textColor="@color/gris_oscuro"
+        android:textSize="28sp" />
+    
+    <TextView
+        android:id="@+id/textPts2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/textPts1"
+        android:layout_marginTop="3sp"
+        android:layout_marginLeft="2sp"
+        android:layout_marginRight="2sp"
+        android:shadowColor="#000000"
+        android:shadowDx="1"
+        android:shadowDy="1"
+        android:shadowRadius="0.3"
+        android:textColor="@color/gris_oscuro"
+        android:textSize="28sp" />
 
     <TextView
         android:id="@+id/textStatus"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/textEquipo1"
-        android:layout_alignBottom="@+id/textEquipo1"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="3sp"
-        android:textSize="12sp"
-        android:textColor="@color/gris_oscuro" />
+        android:layout_toLeftOf="@+id/textPts1"
+        android:layout_marginLeft="2sp"
+        android:layout_marginRight="2sp"
+        android:textColor="@color/gris_oscuro"
+        android:textSize="12sp" />
 
 </RelativeLayout>

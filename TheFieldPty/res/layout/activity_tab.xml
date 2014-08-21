@@ -26,12 +26,63 @@
                     android:id="@android:id/tabs"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/yellow_gradient" />
+                    android:background="#ffffff" />
 
                 <FrameLayout
                     android:id="@android:id/tabcontent"
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent" >
+
+                    <LinearLayout
+                        android:id="@+id/tabMyTeams"
+                        android:layout_width="match_parent"
+                        android:orientation="vertical"
+                        android:layout_height="match_parent" >
+
+                        <TableLayout android:id="@+id/tableButtons"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="1dp"
+                            android:shrinkColumns="*"
+                            android:stretchColumns="*" >
+
+                            <TableRow 
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_horizontal" >
+
+                                <Button
+                                    android:id="@+id/buttonAddFavs"
+                                    style="@style/btnStylePlain"
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="3dp"
+                                    android:layout_marginRight="3dp"
+                                    android:onClick="mostrarEquiposDisponibles"
+                                    android:text="@string/add"
+                                    android:textSize="16sp" />
+
+                                <Button
+                                    android:id="@+id/buttonDelFavs"
+                                    style="@style/btnStylePlain"
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginRight="3dp"
+                                    android:onClick="borrarFavoritos"
+                                    android:text="@string/del"
+                                    android:textSize="16sp" />
+                            </TableRow>
+                        </TableLayout>
+
+                        <ListView
+                            android:id="@+id/equipos_favoritos"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="1dp"
+                            android:cacheColorHint="#00000000" >
+                        </ListView>
+                    </LinearLayout>
 
                     <LinearLayout
                         android:id="@+id/tabLigas"
@@ -51,57 +102,14 @@
                         </ExpandableListView>
                     </LinearLayout>
 
-                    <RelativeLayout
-                        android:id="@+id/tabMyTeams"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent" >
-
-                        <TextView
-                            android:id="@+id/textStatus"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_horizontal|center_vertical"
-                            android:layout_marginTop="5dp"
-                            android:shadowColor="#000000"
-                            android:shadowDx="1"
-                            android:shadowDy="1"
-                            android:shadowRadius="0.3"
-                            android:textColor="@color/orange"
-                            android:textSize="18sp" />
-
-                        <Button
-                            android:id="@+id/buttonAddFavs"
-                            style="@style/btnStylePlain"
-                            android:layout_alignParentRight="true"
-                            android:layout_marginTop="5dp"
-                            android:layout_marginLeft="15dp"
-                            android:layout_marginRight="5dp"
-                            android:layout_toRightOf="@+id/textStatus"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_horizontal|center_vertical"
-                            android:onClick="mostrarEquiposDisponibles"
-                            android:text="@string/add"
-                            android:textSize="16sp" />
-
-                        <ListView
-                            android:id="@+id/equipos_favoritos"
-							android:layout_marginTop="15dp"
-                            android:layout_below="@+id/textStatus"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:cacheColorHint="#00000000" >
-                        </ListView>
-                    </RelativeLayout>
-
                     <LinearLayout
                         android:id="@+id/tabScores"
                         android:layout_width="fill_parent"
                         android:layout_height="match_parent"
                         android:orientation="vertical" >
 
-                        <ExpandableListView
-                            android:id="@+id/expandableListScores"
+                        <ListView
+                            android:id="@+id/listScores"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content" />
                     </LinearLayout>

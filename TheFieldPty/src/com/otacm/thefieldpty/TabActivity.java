@@ -3,7 +3,6 @@ package com.otacm.thefieldpty;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
@@ -24,48 +23,45 @@ import android.widget.ExpandableListView;
 import android.widget.ListView;
 import android.widget.TabHost;
 import android.widget.TabHost.OnTabChangeListener;
-import android.widget.TextView;
-
+import android.widget.Toast;
 import com.example.sample.R;
 import com.google.gson.reflect.TypeToken;
 import com.otacm.thefieldpty.adapters.ExpandableListAdapter;
-import com.otacm.thefieldpty.adapters.ExpandableScores;
 import com.otacm.thefieldpty.adapters.FavoritosAdapter;
+import com.otacm.thefieldpty.adapters.TodayScoresAdapter;
 import com.otacm.thefieldpty.database.beans.Favoritos;
 import com.otacm.thefieldpty.database.daos.FavoritosDAO;
 import com.otacm.thefieldpty.groups.GroupLigas;
-import com.otacm.thefieldpty.groups.GroupScores;
 import com.otacm.thefieldpty.json.JSONUtils;
-import com.otacm.thefieldpty.json.beans.Calendario;
 import com.otacm.thefieldpty.json.beans.Categoria;
 import com.otacm.thefieldpty.json.beans.Liga;
-import com.otacm.thefieldpty.json.beans.Scores;
-import com.otacm.thefieldpty.servicios.PartidoServicio;
+import com.otacm.thefieldpty.json.beans.TodayScores;
 import com.otacm.thefieldpty.utils.AppUtils;
-import com.otacm.thefieldpty.utils.Fechas;
 import com.otacm.thefieldpty.utils.Reporter;
 
 public class TabActivity extends ActionBarActivity {
 	private ExpandableListView expandable_list_ligas;
-	private ExpandableListView expandableListScores;
-	private TextView textFavsStatus;
+	private ListView listScores;
+//	private TextView textFavsStatus;
 	private Context ctx = this;
 	private SparseArray<GroupLigas> groups = new SparseArray<GroupLigas>();
-	private SparseArray<GroupScores> groupScores = new SparseArray<GroupScores>();
+//	private List<TodayScores> groupScores = new ArrayList<TodayScores>();
 	private List<String> strLigas = new ArrayList<String>();
 	private static final int SELECT_TEAMS = 1;
 	private ListView equipos_favoritos;
 	private List<Favoritos> favoritos;
 	private ArrayAdapter<Favoritos> arrayAdapter;
 	private Reporter log = Reporter.getInstance();
+	private FavoritosDAO dao;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_tab);
 		expandable_list_ligas = (ExpandableListView) findViewById(R.id.expandable_list_ligas);
-		expandableListScores  = (ExpandableListView) findViewById(R.id.expandableListScores);
+		listScores  = (ListView) findViewById(R.id.listScores);
 		equipos_favoritos     = (ListView) findViewById(R.id.equipos_favoritos);
+		dao = new FavoritosDAO(getApplicationContext());
 		
 		equipos_favoritos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -80,8 +76,8 @@ public class TabActivity extends ActionBarActivity {
         });
 		
 		//Componentes del tab de my teams
-		textFavsStatus = (TextView) findViewById(R.id.textStatus);
-		textFavsStatus.setTypeface(AppUtils.outlineFont(getApplicationContext()));  
+//		textFavsStatus = (TextView) findViewById(R.id.textStatus);
+//		textFavsStatus.setTypeface(AppUtils.outlineFont(getApplicationContext()));  
 		
 		createTabHost();
 		
@@ -91,9 +87,7 @@ public class TabActivity extends ActionBarActivity {
         
         cargarTabFavoritos();
         
-        cargarTabScores();
-		final ExpandableScores expSc = new ExpandableScores((Activity) ctx, groupScores);
-		expandableListScores.setAdapter(expSc);
+//        cargarTabScores();
 		
 		cargarTabNoticias();
 	}
@@ -148,8 +142,8 @@ public class TabActivity extends ActionBarActivity {
 					inputMethodManager.hideSoftInputFromWindow(tabHost.getWindowToken(), 0);
 					System.out.println("TAB ID : " + tabId);
 					
-					if (tabId.equals("Noticias")) {
-						
+					if (tabId.equals("Scores")) {
+						cargarTabScores();
 					} else if (tabId.equals("some text in the tab header")) {
 					}
 				}
@@ -168,6 +162,37 @@ public class TabActivity extends ActionBarActivity {
 	public void mostrarEquiposDisponibles(View v){
 		Intent i = new Intent(TabActivity.this, SelectFavsActivity.class);
 		startActivityForResult(i, SELECT_TEAMS);
+	}
+	
+	public void borrarFavoritos(View v) {
+		try {
+			boolean somethingToDelete = false;
+			String selectedIds = "";
+			
+			if(arrayAdapter == null || arrayAdapter.getCount() < 0){
+				Toast.makeText(getApplicationContext(), getString(R.string.no_favs_del), Toast.LENGTH_SHORT).show();
+			}else {
+				for (int i = 0; i < arrayAdapter.getCount(); i++) {
+		            Favoritos f = arrayAdapter.getItem(i);
+			            
+		            if (f.isSelected()) {
+		            	somethingToDelete = true;
+		            	selectedIds += f.getId() + ",";
+		            }
+		        }
+					
+				if(somethingToDelete) {
+					selectedIds = selectedIds.substring(0, selectedIds.length() - 1);	
+					dao.deleteByIds(selectedIds);
+					Toast.makeText(getApplicationContext(), getString(R.string.favs_deleted), Toast.LENGTH_SHORT).show();
+					cargarTabFavoritos();
+				}else
+					Toast.makeText(getApplicationContext(), getString(R.string.no_favs_del), Toast.LENGTH_SHORT).show();
+			
+			}
+		}catch(Exception e) {
+			log.write(Reporter.stringStackTrace(e));
+		}
 	}
 	
 	/**
@@ -211,10 +236,10 @@ public class TabActivity extends ActionBarActivity {
 		favoritos = l; 
 		
 		if(l.size() == 0) {
-			textFavsStatus.setText("Sin favoritos"); 
+//			textFavsStatus.setText("Sin favoritos"); 
 			equipos_favoritos.setAdapter(null); 
 		}else {
-			textFavsStatus.setText("Tus favoritos");
+//			textFavsStatus.setText("Tus favoritos");
 			arrayAdapter = new FavoritosAdapter(this, favoritos);
 			equipos_favoritos.setAdapter(arrayAdapter);
 		}
@@ -226,46 +251,16 @@ public class TabActivity extends ActionBarActivity {
 	 */
 	public void cargarTabScores() {
 		try {
-			StringBuilder jsonScores = AppUtils.getJsonFromDisk(getApplicationContext(), "scores");
-			Type typeScores = new TypeToken<List<Scores>>() {}.getType();
-			List<Scores> scores = JSONUtils.factoryGson().fromJson(jsonScores.toString(), typeScores);
-			groupScores.clear();
-			int cont = 0; 
-			boolean hasPts = false;
+			StringBuilder jsonScores = AppUtils.getJsonFromDisk(getApplicationContext(), "today_scores");
+			Type typeScores = new TypeToken<List<TodayScores>>() {}.getType();
+			List<TodayScores> scores = JSONUtils.factoryGson().fromJson(jsonScores.toString(), typeScores);
+			final TodayScoresAdapter expSc = new TodayScoresAdapter(getApplicationContext(), scores);
 			
-			for(Scores sc : scores) {
-				Calendario c = new Calendario();
-				c = PartidoServicio.getPartidoById(getApplicationContext(), sc.getIdPartido());
-				GroupScores g = new GroupScores();
-				
-				g.setNombreEquipo1(sc.getNomEquipo1());
-				g.setNombreEquipo2(sc.getNomEquipo2());
-				
-				if(sc.getPeriodos().size() > 0)
-					hasPts = true;
-				
-				if(hasPts)
-					g.setTeamsMatch(sc.getTotalPtsEquipo1() + " - " + sc.getTotalPtsEquipo2()); 
-				else 
-					g.setTeamsMatch("* - *");
-				
-				long dias = Fechas.diasEntreDosFecha(Fechas.fechahoy(), Fechas.string2Date(c.getFecha(), Fechas.DDMMYYYYGUION));
-				//Solo muestro los partidos para hoy 
-				if(dias >= -3 && dias <= 4){
-					if(dias == 0 && Fechas.compareHours(c.getHora()) == 1) //PARTIDO DE HOY,
-						g.setStatus("Hoy");
-					else if(dias == 0 && Fechas.compareHours(c.getHora()) > 3)//PARTIDO DE HOY, Despues de 3 horas se da por finalizado el partido
-						g.setStatus("Finalizado");
-					else if(dias == 0 && Fechas.compareHours(c.getHora()) == 2)//PARTIDO DE HOY,
-						g.setStatus("No ha iniciado");
-					else if (dias < 0)//PARTIDO DE ANTES,
-						g.setStatus("Finalizado");
-					else
-						g.setStatus("Sin informacion");
-					
-					cont++;
-					groupScores.append(cont, g);
-				} 
+			if(scores.size() == 0) {
+				listScores.setAdapter(null);
+				Toast.makeText(getApplicationContext(), "No hay partidos el dia de hoy", Toast.LENGTH_SHORT).show();
+			} else{
+				listScores.setAdapter(expSc);
 			}
 			
 		} catch (Exception e) {
