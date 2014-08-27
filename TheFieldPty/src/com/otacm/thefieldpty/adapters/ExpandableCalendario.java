@@ -78,8 +78,11 @@ public class ExpandableCalendario extends BaseExpandableListAdapter {
 			convertView = infalInflater.inflate(R.layout.calendario_group_view, null);
 		}
 
-		int id_drawable_1 = AppUtils.getDrawableByName(context, group.getEquipo1().trim().toLowerCase().replace(" ", ""));
-		int id_drawable_2 = AppUtils.getDrawableByName(context, group.getEquipo2().trim().toLowerCase().replace(" ", ""));
+		String nom_id1 = group.getCategoria() + "_" + group.getEquipo1();
+		String nom_id2 = group.getCategoria() + "_" + group.getEquipo2();
+		
+		int id_drawable_1 = AppUtils.getDrawableByName(context, nom_id1.trim().toLowerCase().replace(" ", ""));
+		int id_drawable_2 = AppUtils.getDrawableByName(context, nom_id2.trim().toLowerCase().replace(" ", ""));
 		
 		TextView textoEquipo1 = (TextView) convertView.findViewById(R.id.textoEquipo1);
 		textoEquipo1.setText(group.getEquipo1());

@@ -4,6 +4,15 @@ public class GroupCalendario {
 	private String equipo1;
 	private String equipo2;
 	private String detallePartido;
+	private String categoria;
+
+	public String getCategoria() {
+		return categoria;
+	}
+
+	public void setCategoria(String categoria) {
+		this.categoria = categoria;
+	}
 
 	public String getDetallePartido() {
 		return detallePartido;

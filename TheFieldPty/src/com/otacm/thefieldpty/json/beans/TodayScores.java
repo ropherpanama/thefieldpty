@@ -7,6 +7,15 @@ public class TodayScores {
 	private Integer pts2;
 	private String status;
 	private String hora;
+	private String categoria;
+
+	public String getCategoria() {
+		return categoria;
+	}
+
+	public void setCategoria(String categoria) {
+		this.categoria = categoria;
+	}
 
 	public String getEquipo1() {
 		return equipo1;

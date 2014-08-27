@@ -36,8 +36,11 @@ public class CalendarioArrayAdapter extends ArrayAdapter<GroupCalendario>{
 		
 		View rowView = inflater.inflate(R.layout.calendario_group_view, parent, false);
 		
-		int id_drawable_1 = AppUtils.getDrawableByName(context, e.getEquipo1().trim().toLowerCase().replace(" ", ""));
-		int id_drawable_2 = AppUtils.getDrawableByName(context, e.getEquipo2().trim().toLowerCase().replace(" ", ""));
+		String nom_id1 = e.getCategoria() + "_" + e.getEquipo1();
+		String nom_id2 = e.getCategoria() + "_" + e.getEquipo2();
+		
+		int id_drawable_1 = AppUtils.getDrawableByName(context, nom_id1.trim().toLowerCase().replace(" ", ""));
+		int id_drawable_2 = AppUtils.getDrawableByName(context, nom_id2.trim().toLowerCase().replace(" ", ""));
 		
 		TextView textoEquipo1 = (TextView) rowView.findViewById(R.id.textoEquipo1);
 		textoEquipo1.setText(e.getEquipo1());
@@ -46,6 +49,9 @@ public class CalendarioArrayAdapter extends ArrayAdapter<GroupCalendario>{
 		TextView textoEquipo2 = (TextView) rowView.findViewById(R.id.textoEquipo2);
 		textoEquipo2.setText(e.getEquipo2());
 		textoEquipo2.setTypeface(font); 
+		
+		TextView textoInfo = (TextView) rowView.findViewById(R.id.textoInfo);
+		textoInfo.setText(e.getDetallePartido());
 		
 		if(id_drawable_1 == 0)
 			textoEquipo1.setCompoundDrawablesWithIntrinsicBounds(AppUtils.getDrawableByName(context, "default_logo"),0,0,0);

@@ -49,7 +49,8 @@ public class AppUtils {
 	 */
 	public static int getDrawableByName(Context ctx, String str) {
 		String name = "ic_" + str.replace(".", "_");
-		System.out.println("Buscando drawable llamado : " + name);
+		String name_aux = name.replace("-", "_");
+		System.out.println("Buscando drawable llamado : " + name_aux);
 		return ctx.getResources().getIdentifier(name, "drawable", ctx.getPackageName());
 	}
 	

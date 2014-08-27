@@ -7,6 +7,7 @@ import com.j256.ormlite.table.DatabaseTable;
 public class Favoritos {
 	@DatabaseField(columnName = "id", id = true, useGetSet = true, generatedId = true) private int id;
 	@DatabaseField(columnName = "nombre", useGetSet = true, canBeNull = false) private String nombre;
+	@DatabaseField(columnName = "categoria", useGetSet = true, canBeNull = false) private String categoria;
 
 	private boolean selected = false;
 	
@@ -35,5 +36,13 @@ public class Favoritos {
 
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
+	}
+
+	public String getCategoria() {
+		return categoria;
+	}
+
+	public void setCategoria(String categoria) {
+		this.categoria = categoria;
 	}
 }
