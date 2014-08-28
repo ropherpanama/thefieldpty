@@ -41,8 +41,12 @@ public class EquiposArrayAdapter extends ArrayAdapter<Equipos> {
 		TextView textView = (TextView) rowView.findViewById(R.id.nameEquipo);
 		textView.setText(e.getNombre()); 
 		textView.setTypeface(AppUtils.normalFont(context)); 
+		TextView detailEquipo = (TextView) rowView.findViewById(R.id.detailEquipo);
+		detailEquipo.setText(e.getLiga() + ": " + e.getCategoria()); 
 		
-		int id_drawable = AppUtils.getDrawableByName(context, e.getNombre().trim().toLowerCase().replace(" ", ""));
+		String nom_id = e.getCategoria() + "_" + e.getNombre();
+		
+		int id_drawable = AppUtils.getDrawableByName(context, nom_id.trim().toLowerCase().replace(" ", ""));
 		
 		if(id_drawable == 0)
 			textView.setCompoundDrawablesWithIntrinsicBounds(0, AppUtils.getDrawableByName(context, "default_logo"), 0, 0);

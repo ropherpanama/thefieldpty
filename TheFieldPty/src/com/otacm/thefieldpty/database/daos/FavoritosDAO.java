@@ -16,7 +16,8 @@ public class FavoritosDAO extends DataSource{
 	private Reporter log = Reporter.getInstance();
 	public String [] allColumns = {
 			DataBaseHelper.COLUMN_TABLE_FAVORITOS_ID,
-			DataBaseHelper.COLUMN_TABLE_FAVORITOS_NOMBRE
+			DataBaseHelper.COLUMN_TABLE_FAVORITOS_NOMBRE,
+			DataBaseHelper.COLUMN_TABLE_FAVORITOS_CATEGORIA
 	};
 	
 	public FavoritosDAO(Context context) {
@@ -28,6 +29,7 @@ public class FavoritosDAO extends DataSource{
 			open();
 			ContentValues v = new ContentValues();
 			v.put(DataBaseHelper.COLUMN_TABLE_FAVORITOS_NOMBRE, f.getNombre());
+			v.put(DataBaseHelper.COLUMN_TABLE_FAVORITOS_CATEGORIA, f.getCategoria());
 			getDatabase().insert(DataBaseHelper.TABLE_FAVORITOS_NAME, null, v);
 			close();
 			System.out.println("Favorito guardado");
@@ -78,6 +80,7 @@ public class FavoritosDAO extends DataSource{
 		Favoritos f = new Favoritos();
 		f.setId(c.getInt(0));
 		f.setNombre(c.getString(1));
+		f.setCategoria(c.getString(2));
 		return f;
 	}
 	

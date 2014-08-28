@@ -60,7 +60,9 @@ public class FavoritosAdapter extends ArrayAdapter<Favoritos>{
 		checkbox.setTag(f);
 		checkbox.setChecked(f.isSelected());
 		
-		int id_drawable = AppUtils.getDrawableByName(context, f.getNombre().trim().toLowerCase().replace(" ", ""));
+		String nom_id = f.getCategoria() + "_" + f.getNombre();
+		
+		int id_drawable = AppUtils.getDrawableByName(context, nom_id.trim().toLowerCase().replace(" ", ""));
 		
 		if(id_drawable == 0)
 			textHeader.setCompoundDrawablesWithIntrinsicBounds(AppUtils.getDrawableByName(context, "default_logo"), 0, 0, 0);

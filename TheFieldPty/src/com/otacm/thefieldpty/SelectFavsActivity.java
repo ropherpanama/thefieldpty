@@ -13,6 +13,8 @@ import android.widget.TextView;
 
 import com.example.sample.R;
 import com.otacm.thefieldpty.adapters.EquiposArrayAdapter;
+import com.otacm.thefieldpty.database.beans.Favoritos;
+import com.otacm.thefieldpty.database.daos.FavoritosDAO;
 import com.otacm.thefieldpty.json.beans.Equipos;
 import com.otacm.thefieldpty.servicios.EquiposServicio;
 import com.otacm.thefieldpty.utils.AppUtils;

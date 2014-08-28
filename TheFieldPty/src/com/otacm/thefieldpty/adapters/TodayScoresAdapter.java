@@ -36,8 +36,11 @@ public class TodayScoresAdapter extends ArrayAdapter<TodayScores> {
 		textEquipo1.setText(group.getEquipo1());
 		textEquipo1.setTypeface(AppUtils.normalFont(context));
 
-		int id_drawable_1 = AppUtils.getDrawableByName(context, group.getEquipo1().trim().toLowerCase().replace(" ", ""));
-		int id_drawable_2 = AppUtils.getDrawableByName(context, group.getEquipo2().trim().toLowerCase().replace(" ", ""));
+		String nom_id1 = group.getCategoria() + "_" + group.getEquipo1();
+		String nom_id2 = group.getCategoria() + "_" + group.getEquipo2();
+		
+		int id_drawable_1 = AppUtils.getDrawableByName(context, nom_id1.trim().toLowerCase().replace(" ", ""));
+		int id_drawable_2 = AppUtils.getDrawableByName(context, nom_id2.trim().toLowerCase().replace(" ", ""));
 
 		if (id_drawable_1 == 0)
 			textEquipo1.setCompoundDrawablesWithIntrinsicBounds(AppUtils.getDrawableByName(context, "default_logo"), 0, 0, 0);
