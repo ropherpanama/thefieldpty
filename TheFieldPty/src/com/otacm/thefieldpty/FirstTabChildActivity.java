@@ -74,7 +74,9 @@ public class FirstTabChildActivity extends ActionBarActivity {
 					GroupCalendario group = new GroupCalendario();
 					group.setEquipo1(c.getEquipo1());
 					group.setEquipo2(c.getEquipo2()); 
+					group.setCategoria(c.getCategoria()); 
 					group.setDetallePartido(String.format(getString(R.string.detalle_partido), c.getFecha(), c.getHora(), c.getLugar()));
+					group.setMarcadorFinal(c.getMarcadorFinal());
 					groups.add(group);
 					System.out.println(group.getDetallePartido());
 				}else {

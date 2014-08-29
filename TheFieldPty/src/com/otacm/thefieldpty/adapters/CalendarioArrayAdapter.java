@@ -53,6 +53,9 @@ public class CalendarioArrayAdapter extends ArrayAdapter<GroupCalendario>{
 		TextView textoInfo = (TextView) rowView.findViewById(R.id.textoInfo);
 		textoInfo.setText(e.getDetallePartido());
 		
+		TextView textMarcador = (TextView) rowView.findViewById(R.id.textMarcador);
+		textMarcador.setText(e.getMarcadorFinal());
+		
 		if(id_drawable_1 == 0)
 			textoEquipo1.setCompoundDrawablesWithIntrinsicBounds(AppUtils.getDrawableByName(context, "default_logo"),0,0,0);
 		else
