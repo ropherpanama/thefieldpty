@@ -2,7 +2,6 @@ package com.otacm.thefieldpty;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -10,7 +9,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
 import android.widget.TextView;
-
 import com.example.sample.R;
 import com.otacm.thefieldpty.adapters.EquiposArrayAdapter;
 import com.otacm.thefieldpty.database.beans.Favoritos;
@@ -23,6 +21,7 @@ public class SelectFavsActivity extends ActionBarActivity {
 
 	private ListView listEquipos;
 	private List<Equipos> equipos = new ArrayList<Equipos>();
+	private List<Equipos> filterEquipos = new ArrayList<Equipos>();
 	private EquiposArrayAdapter adapter;
 	private TextView testTitle;
 
@@ -34,8 +33,15 @@ public class SelectFavsActivity extends ActionBarActivity {
 		testTitle = (TextView) findViewById(R.id.testTitle);
 		testTitle.setTypeface(AppUtils.normalFont(getApplicationContext()));;
 		equipos = EquiposServicio.getAll(getApplicationContext());
-		adapter = new EquiposArrayAdapter(getApplicationContext(), equipos);
+		
+		filtrarFavoritos();//Los favoritos no deben aparecer en la lista de equipos a elegir
+		
+		filterEquipos = equipos;
+		
+		adapter = new EquiposArrayAdapter(getApplicationContext(), filterEquipos);
 		listEquipos.setAdapter(adapter);
+		
+		equipos = null;
 	}
 
 	@Override
@@ -66,5 +72,25 @@ public class SelectFavsActivity extends ActionBarActivity {
 		super.onBackPressed();
 		Intent in = new Intent();
 		setResult(1, in);
+	}
+	
+	/**
+	 * Se crea este metodo para filtrar los equipos que son favoritos
+	 * para que no aparezcan en la lista para seleccion de los mismos
+	 * esto evita confusiones
+	 */
+	public void filtrarFavoritos() {
+		FavoritosDAO fdao = new FavoritosDAO(getApplicationContext());
+		List<Favoritos> favs = new ArrayList<Favoritos>();
+		favs = fdao.getAll();
+		
+		for(int i = 0; i < equipos.size(); i++) {
+			for(Favoritos f : favs) {
+				if(equipos.get(i).getNombre().equals(f.getNombre())) 
+					equipos.remove(i);
+			}
+		}
+		
+		favs = null;
 	}
 }

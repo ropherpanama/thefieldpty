@@ -19,7 +19,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 			+ TABLE_FAVORITOS_NAME
 			+ "("
 			+ COLUMN_TABLE_FAVORITOS_ID + " integer primary key autoincrement, "
-			+ COLUMN_TABLE_FAVORITOS_NOMBRE + " text not null unique"
+			+ COLUMN_TABLE_FAVORITOS_NOMBRE + " text not null unique, "
 			+ COLUMN_TABLE_FAVORITOS_CATEGORIA + " text not null "
 			+ ")";
 	

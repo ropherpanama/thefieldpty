@@ -23,6 +23,7 @@ public class EquiposArrayAdapter extends ArrayAdapter<Equipos> {
 	private final Context context;
 	private final List<Equipos> values;
 	private FavoritosDAO dao;
+	private final ArrayAdapter<Equipos> arrayAdapter = this;
 	
 	public EquiposArrayAdapter(Context context, List<Equipos> values) {
 		super(context, R.layout.list_equipos_item, values);
@@ -62,9 +63,10 @@ public class EquiposArrayAdapter extends ArrayAdapter<Equipos> {
 					System.out.println("Checked " + e.getNombre());
 					Favoritos f = new Favoritos();
 					f.setNombre(e.getNombre());
+					f.setCategoria(e.getCategoria());
 					dao.insertFavorito(f);
 					Toast.makeText(context, e.getNombre() + " guardado", Toast.LENGTH_SHORT).show();
-					button.setEnabled(false);
+					arrayAdapter.remove(e); //Remueve de la lista lo que se selecciona
 				}catch(android.database.sqlite.SQLiteConstraintException ex) {
 					Toast.makeText(context, e.getNombre() + " ya existe", Toast.LENGTH_SHORT).show();
 				}

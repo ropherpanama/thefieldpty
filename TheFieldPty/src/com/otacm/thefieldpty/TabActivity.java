@@ -8,6 +8,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.SparseArray;
@@ -15,14 +16,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ExpandableListView;
 import android.widget.ListView;
 import android.widget.TabHost;
 import android.widget.TabHost.OnTabChangeListener;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.example.sample.R;
 import com.google.gson.reflect.TypeToken;
@@ -38,6 +38,8 @@ import com.otacm.thefieldpty.json.beans.Liga;
 import com.otacm.thefieldpty.json.beans.TodayScores;
 import com.otacm.thefieldpty.utils.AppUtils;
 import com.otacm.thefieldpty.utils.Reporter;
+import com.otacm.thefieldpty.utils.TwitterConfiguration;
+import com.otacm.thefieldpty.adapters.TwitterAdapter;
 
 public class TabActivity extends ActionBarActivity {
 	private ExpandableListView expandable_list_ligas;
@@ -53,6 +55,9 @@ public class TabActivity extends ActionBarActivity {
 	private ArrayAdapter<Favoritos> arrayAdapter;
 	private Reporter log = Reporter.getInstance();
 	private FavoritosDAO dao;
+	private TextView userName;
+	private TwitterAdapter twitterAdapter;
+	private ListView listTwitter;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +66,9 @@ public class TabActivity extends ActionBarActivity {
 		expandable_list_ligas = (ExpandableListView) findViewById(R.id.expandable_list_ligas);
 		listScores  = (ListView) findViewById(R.id.listScores);
 		equipos_favoritos     = (ListView) findViewById(R.id.equipos_favoritos);
+		userName = (TextView) findViewById(R.id.userName);
+		listTwitter = (ListView) findViewById(R.id.listTwitter);
+		
 		dao = new FavoritosDAO(getApplicationContext());
 		
 		equipos_favoritos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -273,11 +281,11 @@ public class TabActivity extends ActionBarActivity {
 	 */
 	@SuppressLint("SetJavaScriptEnabled")
 	public void cargarTabNoticias() {
-		WebView webView = (WebView) this.findViewById(R.id.webView);
-//		webView.getSettings().setUserAgentString("Mozilla/5.0 (iPhone; U; CPU like Mac OS X; en) AppleWebKit/420+ (KHTML, like Gecko) Version/3.0 Mobile/1A543a Safari/419.3");
-		webView.getSettings().setJavaScriptEnabled(true);
-		webView.setWebViewClient(new WebViewClient());
-		webView.loadUrl("https://twitter.com/TheFieldpty");
+		try {			
+			new GetTwitterStatus().execute();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	@Override
@@ -287,6 +295,46 @@ public class TabActivity extends ActionBarActivity {
 		System.out.println("resultCode  "  + resultCode);
 		if(requestCode == SELECT_TEAMS) {
 			cargarTabFavoritos();
+		}
+	}
+	
+	private class GetTwitterStatus extends AsyncTask<Void, Void, Boolean> {
+
+		List<twitter4j.Status> twitts = new ArrayList<twitter4j.Status>();
+		String username = "";
+		
+		public Boolean hacerTrabajoSucio() {
+			try {
+				TwitterConfiguration tc = new TwitterConfiguration();
+				twitts = tc.getInterface().getHomeTimeline();
+				username = tc.getUserName();
+				return true;
+			} catch (Exception e) {
+				log.write(Reporter.stringStackTrace(e));
+				return false;
+			}
+		}
+		
+		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+		}
+		
+		@Override
+		protected Boolean doInBackground(Void... params) {
+			return hacerTrabajoSucio();
+		}
+		
+		@Override
+		protected void onPostExecute(Boolean result) {
+			super.onPostExecute(result);
+			
+			if(result) {
+				userName.setText("@" + username); 
+				twitterAdapter = new TwitterAdapter(getApplicationContext(), twitts);
+				listTwitter.setAdapter(twitterAdapter); 
+			}else
+				Toast.makeText(getApplicationContext(), "No puedo acceder a Twitter", Toast.LENGTH_LONG).show();
 		}
 	}
 }

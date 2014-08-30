@@ -9,6 +9,7 @@ public class Calendario {
 	private String categoria;
 	private String liga;
 	private int idPartido;
+	private String marcadorFinal;
 
 	public String getFecha() {
 		return fecha;
@@ -72,5 +73,13 @@ public class Calendario {
 
 	public void setIdPartido(int idPartido) {
 		this.idPartido = idPartido;
+	}
+
+	public String getMarcadorFinal() {
+		return marcadorFinal;
+	}
+
+	public void setMarcadorFinal(String marcadorFinal) {
+		this.marcadorFinal = marcadorFinal;
 	}
 }

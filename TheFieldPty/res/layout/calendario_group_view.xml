@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@drawable/gray_gradient_yellow_stroke"
     android:padding="10dp" >
 
@@ -10,7 +9,9 @@
         android:id="@+id/textoEquipo1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:drawableLeft="@drawable/ic_9erswomen"
+        android:layout_alignParentLeft="true"
+        android:layout_toLeftOf="@+id/textMarcador"
+        android:drawableLeft="@drawable/ic_nffl_9erswomen"
         android:paddingLeft="2dp"
         android:shadowColor="#000000"
         android:shadowDx="1"
@@ -23,6 +24,7 @@
         android:id="@+id/textoEquipo2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/textoEquipo1"
         android:drawableLeft="@drawable/ic_cardinals"
         android:paddingLeft="2dp"
         android:shadowColor="#000000"
@@ -31,13 +33,28 @@
         android:shadowRadius="0.3"
         android:textColor="@color/yellow_mid"
         android:textSize="16sp" />
-    
-        <TextView
+
+    <TextView
         android:id="@+id/textoInfo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/textoEquipo2"
         android:paddingLeft="2dp"
         android:textColor="#000000"
         android:textSize="16sp" />
 
-</LinearLayout>
+    <TextView
+        android:id="@+id/textMarcador"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginLeft="2sp"
+        android:layout_marginRight="2sp"
+        android:shadowColor="#000000"
+        android:shadowDx="1"
+        android:shadowDy="1"
+        android:shadowRadius="0.3"
+        android:textColor="@color/gris_oscuro"
+        android:textSize="28sp" />
+
+</RelativeLayout>

@@ -60,7 +60,6 @@ public class Splashctivity extends Activity {
 		long termino;
 		ArrayList<InputStream> streams = new ArrayList<InputStream>();
 
-		@SuppressWarnings("resource")
 		protected boolean obtenerDataDeServidor() {
 			try{
 				Resources res = getResources();
