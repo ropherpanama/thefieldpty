@@ -9,37 +9,40 @@
         <item>equipos</item>
         <item>today_scores</item>
     </string-array>
+    
     <string-array name="syncFrequency">
-        <item name="0">5 minutos</item>
-        <item name="1">10 minutos</item>
-        <item name="2">15 minutos</item>
-        <item name="3">20 minutos</item>
-        <item name="4">30 minutos</item>
+        <item>5 minutos</item>
+        <item>10 minutos</item>
+        <item>15 minutos</item>
+        <item>20 minutos</item>
+        <item>30 minutos</item>
     </string-array>
-    <integer-array name="syncFrequencyValues">
-        <item name="0">0</item>
-        <item name="1">1</item>
-        <item name="2">2</item>
-        <item name="3">3</item>
-        <item name="4">4</item>
-    </integer-array>
+
+    <string-array name="syncFrequencyValues">
+        <item>5</item>
+        <item>10</item>
+        <item>15</item>
+        <item>20</item>
+        <item>30</item>
+    </string-array>
+
     <string-array name="alarmPreTime">
-        <item name="0">5 minutos</item>
-        <item name="1">10 minutos</item>
-        <item name="2">15 minutos</item>
-        <item name="3">20 minutos</item>
-        <item name="4">30 minutos</item>
-        <item name="5">1 hora</item>
-        <item name="6">Hora del partido</item>
+        <item>5 minutos</item>
+        <item>10 minutos</item>
+        <item>15 minutos</item>
+        <item>20 minutos</item>
+        <item>30 minutos</item>
+        <item>1 hora</item>
+        <item>Hora del partido</item>
     </string-array>
     <string-array name="alarmPreTimeValues">
-        <item name="0">0</item>
-        <item name="1">1</item>
-        <item name="2">2</item>
-        <item name="3">3</item>
-        <item name="4">4</item>
-        <item name="5">5</item>
-        <item name="6">6</item>
+        <item>5</item>
+        <item>10</item>
+        <item>15</item>
+        <item>20</item>
+        <item>30</item>
+        <item>60</item>
+        <item>0</item>
     </string-array>
 
 </resources>

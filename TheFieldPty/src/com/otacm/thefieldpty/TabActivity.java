@@ -4,6 +4,7 @@ import java.lang.reflect.Type;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
@@ -29,6 +30,7 @@ import android.widget.TabHost;
 import android.widget.TabHost.OnTabChangeListener;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.example.sample.R;
 import com.google.gson.reflect.TypeToken;
 import com.otacm.thefieldpty.adapters.ExpandableListAdapter;
@@ -71,6 +73,7 @@ public class TabActivity extends ActionBarActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_tab);
+		
 		expandable_list_ligas = (ExpandableListView) findViewById(R.id.expandable_list_ligas);
 		listScores  = (ListView) findViewById(R.id.listScores);
 		equipos_favoritos     = (ListView) findViewById(R.id.equipos_favoritos);
@@ -81,10 +84,11 @@ public class TabActivity extends ActionBarActivity {
 		SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
 		IS_NOTIFICATION_ACTIVATED = sharedPrefs.getBoolean("prefSendReport", false);
 		
+		UPDATE_SERVER_TIME = sharedPrefs.getString("prefSyncFrequency", "30");
+		setUpServerRequests(Integer.valueOf(UPDATE_SERVER_TIME)); 
+		
 		if(IS_NOTIFICATION_ACTIVATED) {
-			UPDATE_SERVER_TIME = sharedPrefs.getString("prefSyncFrequency", "4");
-			PRE_ALARM_TIME = sharedPrefs.getString("prefAlarmFrequency", "6");
-			//setUpAlarmServices(Integer.valueOf(UPDATE_SERVER_TIME), Integer.valueOf(PRE_ALARM_TIME)); 
+			PRE_ALARM_TIME = sharedPrefs.getString("prefAlarmFrequency", "0");
 			Toast.makeText(getApplicationContext(), getString(R.string.alarm_on), Toast.LENGTH_SHORT).show();
 		}else
 			Toast.makeText(getApplicationContext(), getString(R.string.alarm_off), Toast.LENGTH_SHORT).show();
@@ -363,14 +367,15 @@ public class TabActivity extends ActionBarActivity {
 		}
 	}
 	
-	private void setUpAlarmServices(int refreshTime, int alarmPretime) {
+	private void setUpServerRequests(int refreshTime) {
 		try {
+			System.out.println("ACTUALIZAR DATOS CADA " + refreshTime + " MINUTOS");
 			alarm = new RemainderBroadcastReceiver();
 			
 			if (alarm != null)
-				alarm.setAlarm(ctx);
+				alarm.setAlarm(ctx, refreshTime);
 			else
-				Toast.makeText(ctx, "No pudo iniciarse servicio de alarmas", Toast.LENGTH_SHORT).show();
+				Toast.makeText(ctx, "No pudo iniciarse servicio de actualizacion", Toast.LENGTH_SHORT).show();
 		} catch (Exception e) {
 			log.write(Reporter.stringStackTrace(e));
 		}
