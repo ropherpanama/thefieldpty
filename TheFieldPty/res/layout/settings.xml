@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+     
+    <PreferenceCategory android:title="@string/alarms_1" >  
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="prefSendReport"
+            android:summary="@string/alarms_2"
+            android:title="@string/alarms_3" >
+        </CheckBoxPreference>
+ 
+        <ListPreference
+            android:key="prefAlarmFrequency"
+            android:entries="@array/alarmPreTime"
+            android:summary="@string/alarms_8"
+            android:entryValues="@array/alarmPreTimeValues"
+            android:title="@string/alarms_6"
+            android:dependency="prefSendReport" />
+    </PreferenceCategory>
+    
+        <PreferenceCategory android:title="@string/alarms_4" >
+        <ListPreference
+            android:key="prefSyncFrequency"
+            android:entries="@array/syncFrequency"
+            android:summary="@string/alarms_5"
+            android:entryValues="@array/syncFrequencyValues"
+            android:title="@string/alarms_7" />
+    </PreferenceCategory>
+ 
+</PreferenceScreen>
