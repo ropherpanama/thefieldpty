@@ -14,10 +14,11 @@ import com.otacm.thefieldpty.utils.Reporter;
 
 public class FavoritosDAO extends DataSource{
 	private Reporter log = Reporter.getInstance();
-	public String [] allColumns = {
+	private String [] allColumns = {
 			DataBaseHelper.COLUMN_TABLE_FAVORITOS_ID,
 			DataBaseHelper.COLUMN_TABLE_FAVORITOS_NOMBRE,
-			DataBaseHelper.COLUMN_TABLE_FAVORITOS_CATEGORIA
+			DataBaseHelper.COLUMN_TABLE_FAVORITOS_CATEGORIA,
+			DataBaseHelper.COLUMN_TABLE_FAVORITOS_REMAINDER
 	};
 	
 	public FavoritosDAO(Context context) {
@@ -30,6 +31,7 @@ public class FavoritosDAO extends DataSource{
 			ContentValues v = new ContentValues();
 			v.put(DataBaseHelper.COLUMN_TABLE_FAVORITOS_NOMBRE, f.getNombre());
 			v.put(DataBaseHelper.COLUMN_TABLE_FAVORITOS_CATEGORIA, f.getCategoria());
+			v.put(DataBaseHelper.COLUMN_TABLE_FAVORITOS_REMAINDER, 0); 
 			getDatabase().insert(DataBaseHelper.TABLE_FAVORITOS_NAME, null, v);
 			close();
 			System.out.println("Favorito guardado");
@@ -81,6 +83,7 @@ public class FavoritosDAO extends DataSource{
 		f.setId(c.getInt(0));
 		f.setNombre(c.getString(1));
 		f.setCategoria(c.getString(2));
+		f.setRemainder(c.getInt(3)); 
 		return f;
 	}
 	
@@ -93,6 +96,35 @@ public class FavoritosDAO extends DataSource{
 		}catch(Exception e) {
 			log.error(Reporter.stringStackTrace(e));
 			return false;
+		}
+	}
+	
+	public void updateRemainder(int id, int flag) {
+		open();
+		ContentValues cv = new ContentValues();
+		cv.put("remainder",flag);
+		getDatabase().update(DataBaseHelper.TABLE_FAVORITOS_NAME, cv, "id = " + id, null);
+		close();
+	}
+	
+	public Favoritos getFavoritoByID(int id) {
+		try {
+			open();
+			Cursor cursor = getDatabase()
+					.query(DataBaseHelper.TABLE_FAVORITOS_NAME, allColumns,
+							" id = ?", new String[] { String.valueOf(id) },
+							null, null, null, null);
+
+			if (cursor != null)
+				cursor.moveToFirst();
+
+			Favoritos ret = cursorToFavorito(cursor);
+			close();
+
+			return ret;
+		}catch(Exception e) {
+			log.write(Reporter.stringStackTrace(e));
+			return null;
 		}
 	}
 }

@@ -17,6 +17,7 @@ public class Fechas {
 	public static final String YYYYMMDDGUION = "yyyy-MM-dd";
 	public static final String MMDDYYYYSLASH = "MM/dd/yyyy";
 	public static final String YYYYMMDDHORAGUION = "yyyy-MM-dd HH:mm:ss";
+	public static final String DDMMYYYYHORAGUION = "dd-MM-yyyy HH:mm:ss";
 	public static final String YYYYMMDDHORASLASH = "yyyy/MM/dd HH:mm:ss";
 	public static final String YYYYMMDDHORA = "yyyyMMdd HH:mm:ss";
 	public static final String YYYYMMDD = "yyyyMMdd";
@@ -108,8 +109,6 @@ public class Fechas {
 		try {
 			formatter.applyPattern(format);
 			Date date = formatter.parse(str);
-			System.out.println("Converted Date: " + date);
-			System.out.println(formatter.format(date));
 			return date;
 		} catch (ParseException e) {
 			log.error(Reporter.stringStackTrace(e));
@@ -167,5 +166,10 @@ public class Fechas {
 		Date inputTime = parser.parse(str);
 	    final int MILLI_TO_HOUR = 1000 * 60 * 60;
 	    return (int) (systemTime.getTime() - inputTime.getTime()) / MILLI_TO_HOUR;
+	}
+	
+	public static String DateToString(Date date, String format) {
+		SimpleDateFormat formatter = new SimpleDateFormat(format);
+		return formatter.format(date);
 	}
 }

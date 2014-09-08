@@ -140,6 +140,7 @@ public class Splashctivity extends Activity {
 				Toast.makeText(getApplicationContext(), String.format(getString(R.string.data_actualizada), (termino - inicio)), Toast.LENGTH_LONG).show();
 			}else {
 				Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
+				finish();
 			}
 		}
 	}
