@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <PreferenceCategory android:title="@string/alarms_1" >
+
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="prefSendReport"
+            android:summary="@string/alarms_2"
+            android:title="@string/alarms_3" >
+        </CheckBoxPreference>
+
+        <ListPreference
+            android:dependency="prefSendReport"
+            android:entries="@array/alarmPreTime"
+            android:entryValues="@array/alarmPreTimeValues"
+            android:key="prefAlarmFrequency"
+            android:summary="@string/alarms_8"
+            android:title="@string/alarms_6" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/alarms_4" >
+
+        <ListPreference
+            android:entries="@array/syncFrequency"
+            android:entryValues="@array/syncFrequencyValues"
+            android:key="prefSyncFrequency"
+            android:summary="@string/alarms_5"
+            android:title="@string/alarms_7" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="Modo de aviso" >
+
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="prefVibrate"
+            android:title="Vibrar" >
+        </CheckBoxPreference>
+        
+    </PreferenceCategory>
+
+</PreferenceScreen>

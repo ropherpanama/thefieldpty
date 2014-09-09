@@ -53,13 +53,14 @@ public class Splashctivity extends Activity {
 		return res;
 	}
 	
-	private class ConsumirServicio extends AsyncTask<Void, Void, String> {
+	public class ConsumirServicio extends AsyncTask<Void, Void, String> {
 
 		ProgressDialog progressDialog;
 		long inicio;
 		long termino;
 		ArrayList<InputStream> streams = new ArrayList<InputStream>();
 
+		@SuppressWarnings("resource")
 		protected boolean obtenerDataDeServidor() {
 			try{
 				Resources res = getResources();
@@ -140,6 +141,7 @@ public class Splashctivity extends Activity {
 				Toast.makeText(getApplicationContext(), String.format(getString(R.string.data_actualizada), (termino - inicio)), Toast.LENGTH_LONG).show();
 			}else {
 				Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
+				finish();
 			}
 		}
 	}

@@ -8,6 +8,7 @@ public class Favoritos {
 	@DatabaseField(columnName = "id", id = true, useGetSet = true, generatedId = true) private int id;
 	@DatabaseField(columnName = "nombre", useGetSet = true, canBeNull = false) private String nombre;
 	@DatabaseField(columnName = "categoria", useGetSet = true, canBeNull = false) private String categoria;
+	@DatabaseField(columnName = "remainder", useGetSet = true, canBeNull = false) private int remainder;
 
 	private boolean selected = false;
 	
@@ -44,5 +45,13 @@ public class Favoritos {
 
 	public void setCategoria(String categoria) {
 		this.categoria = categoria;
+	}
+
+	public int getRemainder() {
+		return remainder;
+	}
+
+	public void setRemainder(int remainder) {
+		this.remainder = remainder;
 	}
 }

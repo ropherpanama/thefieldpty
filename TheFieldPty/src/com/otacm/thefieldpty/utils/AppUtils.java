@@ -3,10 +3,13 @@ package com.otacm.thefieldpty.utils;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
+
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
+
 import android.content.Context;
 import android.graphics.Typeface;
+import android.os.Vibrator;
 
 public class AppUtils {
 
@@ -60,5 +63,10 @@ public class AppUtils {
 	
 	public static Typeface outlineFont(Context ctx) {
 		return Typeface.createFromAsset(ctx.getAssets(), "ParmaPetitOutline.ttf");
+	}
+	
+	public static void vibrar(Context context, int millisecs) {
+		Vibrator v = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
+		 v.vibrate(millisecs);
 	}
 }

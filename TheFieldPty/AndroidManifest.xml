@@ -11,6 +11,8 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.VIBRATE"/>
 
     <application
         android:allowBackup="true"
@@ -40,6 +42,13 @@
             android:name="com.otacm.thefieldpty.SelectFavsActivity"
             android:label="@string/title_activity_select_favs" >
         </activity>
+        
+        <activity
+            android:name="com.otacm.thefieldpty.AppSettings">
+        </activity>
+        
+        <receiver android:name="com.otacm.thefieldpty.remainders.RemainderBroadcastReceiver"/>
+        
     </application>
 
 </manifest>

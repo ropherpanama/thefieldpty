@@ -9,5 +9,40 @@
         <item>equipos</item>
         <item>today_scores</item>
     </string-array>
+    
+    <string-array name="syncFrequency">
+        <item>5 minutos</item>
+        <item>10 minutos</item>
+        <item>15 minutos</item>
+        <item>20 minutos</item>
+        <item>30 minutos</item>
+    </string-array>
+
+    <string-array name="syncFrequencyValues">
+        <item>5</item>
+        <item>10</item>
+        <item>15</item>
+        <item>20</item>
+        <item>30</item>
+    </string-array>
+
+    <string-array name="alarmPreTime">
+        <item>5 minutos</item>
+        <item>10 minutos</item>
+        <item>15 minutos</item>
+        <item>20 minutos</item>
+        <item>30 minutos</item>
+        <item>1 hora</item>
+        <item>Hora del partido</item>
+    </string-array>
+    <string-array name="alarmPreTimeValues">
+        <item>5</item>
+        <item>10</item>
+        <item>15</item>
+        <item>20</item>
+        <item>30</item>
+        <item>60</item>
+        <item>0</item>
+    </string-array>
 
 </resources>

@@ -1,15 +1,21 @@
 package com.otacm.thefieldpty;
 
 import java.lang.reflect.Type;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
 import android.util.SparseArray;
 import android.view.Menu;
@@ -24,11 +30,13 @@ import android.widget.TabHost;
 import android.widget.TabHost.OnTabChangeListener;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.example.sample.R;
 import com.google.gson.reflect.TypeToken;
 import com.otacm.thefieldpty.adapters.ExpandableListAdapter;
 import com.otacm.thefieldpty.adapters.FavoritosAdapter;
 import com.otacm.thefieldpty.adapters.TodayScoresAdapter;
+import com.otacm.thefieldpty.adapters.TwitterAdapter;
 import com.otacm.thefieldpty.database.beans.Favoritos;
 import com.otacm.thefieldpty.database.daos.FavoritosDAO;
 import com.otacm.thefieldpty.groups.GroupLigas;
@@ -36,18 +44,16 @@ import com.otacm.thefieldpty.json.JSONUtils;
 import com.otacm.thefieldpty.json.beans.Categoria;
 import com.otacm.thefieldpty.json.beans.Liga;
 import com.otacm.thefieldpty.json.beans.TodayScores;
+import com.otacm.thefieldpty.remainders.RemainderBroadcastReceiver;
 import com.otacm.thefieldpty.utils.AppUtils;
 import com.otacm.thefieldpty.utils.Reporter;
 import com.otacm.thefieldpty.utils.TwitterConfiguration;
-import com.otacm.thefieldpty.adapters.TwitterAdapter;
 
 public class TabActivity extends ActionBarActivity {
 	private ExpandableListView expandable_list_ligas;
 	private ListView listScores;
-//	private TextView textFavsStatus;
 	private Context ctx = this;
 	private SparseArray<GroupLigas> groups = new SparseArray<GroupLigas>();
-//	private List<TodayScores> groupScores = new ArrayList<TodayScores>();
 	private List<String> strLigas = new ArrayList<String>();
 	private static final int SELECT_TEAMS = 1;
 	private ListView equipos_favoritos;
@@ -58,16 +64,34 @@ public class TabActivity extends ActionBarActivity {
 	private TextView userName;
 	private TwitterAdapter twitterAdapter;
 	private ListView listTwitter;
+	private RemainderBroadcastReceiver alarm;
+	private String UPDATE_SERVER_TIME = "";
+	private String PRE_ALARM_TIME = "";
+	private boolean IS_NOTIFICATION_ACTIVATED = false;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_tab);
+		
 		expandable_list_ligas = (ExpandableListView) findViewById(R.id.expandable_list_ligas);
 		listScores  = (ListView) findViewById(R.id.listScores);
 		equipos_favoritos     = (ListView) findViewById(R.id.equipos_favoritos);
 		userName = (TextView) findViewById(R.id.userName);
 		listTwitter = (ListView) findViewById(R.id.listTwitter);
+		
+		//Configuracion de Notificaciones
+		SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
+		IS_NOTIFICATION_ACTIVATED = sharedPrefs.getBoolean("prefSendReport", false);
+		
+		UPDATE_SERVER_TIME = sharedPrefs.getString("prefSyncFrequency", "30");
+		setUpServerRequests(Integer.valueOf(UPDATE_SERVER_TIME)); 
+		
+		if(IS_NOTIFICATION_ACTIVATED) {
+			PRE_ALARM_TIME = sharedPrefs.getString("prefAlarmFrequency", "0");
+			Toast.makeText(getApplicationContext(), getString(R.string.alarm_on), Toast.LENGTH_SHORT).show();
+		}else
+			Toast.makeText(getApplicationContext(), getString(R.string.alarm_off), Toast.LENGTH_SHORT).show();
 		
 		dao = new FavoritosDAO(getApplicationContext());
 		
@@ -77,15 +101,8 @@ public class TabActivity extends ActionBarActivity {
             	Favoritos team = arrayAdapter.getItem(position);
                 Bundle bundle = new Bundle();
                 bundle.putInt("team", team.getId());
-//                Intent intent = new Intent(getApplicationContext(), ShoppingActivity.class);
-//                intent.putExtras(bundle);
-//                startActivity(intent);
             }
         });
-		
-		//Componentes del tab de my teams
-//		textFavsStatus = (TextView) findViewById(R.id.textStatus);
-//		textFavsStatus.setTypeface(AppUtils.outlineFont(getApplicationContext()));  
 		
 		createTabHost();
 		
@@ -94,9 +111,6 @@ public class TabActivity extends ActionBarActivity {
         expandable_list_ligas.setAdapter(expListAdapter);
         
         cargarTabFavoritos();
-        
-//        cargarTabScores();
-		
 		cargarTabNoticias();
 	}
 
@@ -110,8 +124,12 @@ public class TabActivity extends ActionBarActivity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		int id = item.getItemId();
 		if (id == R.id.action_settings) {
+			Intent i = new Intent(this, AppSettings.class);
+//	        startActivityForResult(i, RESULT_SETTINGS);
+			startActivity(i); 
 			return true;
 		}
+	
 		return super.onOptionsItemSelected(item);
 	}
 
@@ -150,10 +168,12 @@ public class TabActivity extends ActionBarActivity {
 					inputMethodManager.hideSoftInputFromWindow(tabHost.getWindowToken(), 0);
 					System.out.println("TAB ID : " + tabId);
 					
-					if (tabId.equals("Scores")) {
+					if (tabId.equals("Scores"))
 						cargarTabScores();
-					} else if (tabId.equals("some text in the tab header")) {
-					}
+					else if (tabId.equals("Noticias")) 
+						cargarTabNoticias();
+					else if(tabId.equals("My teams"))
+						cargarTabFavoritos();
 				}
 			});
 
@@ -244,10 +264,8 @@ public class TabActivity extends ActionBarActivity {
 		favoritos = l; 
 		
 		if(l.size() == 0) {
-//			textFavsStatus.setText("Sin favoritos"); 
 			equipos_favoritos.setAdapter(null); 
 		}else {
-//			textFavsStatus.setText("Tus favoritos");
 			arrayAdapter = new FavoritosAdapter(this, favoritos);
 			equipos_favoritos.setAdapter(arrayAdapter);
 		}
@@ -284,7 +302,7 @@ public class TabActivity extends ActionBarActivity {
 		try {			
 			new GetTwitterStatus().execute();
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.write(Reporter.stringStackTrace(e));
 		}
 	}
 	
@@ -302,11 +320,22 @@ public class TabActivity extends ActionBarActivity {
 
 		List<twitter4j.Status> twitts = new ArrayList<twitter4j.Status>();
 		String username = "";
+		String imageProfileUrl = "";
+		Bitmap bmp = null;
+		int followers = 0;
 		
 		public Boolean hacerTrabajoSucio() {
 			try {
 				TwitterConfiguration tc = new TwitterConfiguration();
-				twitts = tc.getInterface().getHomeTimeline();
+				twitts = tc.getInterface().getUserTimeline();
+				
+				if(twitts.size() > 0) {
+					imageProfileUrl = twitts.get(0).getUser().getOriginalProfileImageURL();
+					followers = twitts.get(0).getUser().getFollowersCount();
+				}
+				
+				URL url = new URL(imageProfileUrl);
+				bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
 				username = tc.getUserName();
 				return true;
 			} catch (Exception e) {
@@ -330,11 +359,25 @@ public class TabActivity extends ActionBarActivity {
 			super.onPostExecute(result);
 			
 			if(result) {
-				userName.setText("@" + username); 
-				twitterAdapter = new TwitterAdapter(getApplicationContext(), twitts);
+				userName.setText("@" + username + " " + followers + " Followers"); 
+				twitterAdapter = new TwitterAdapter(getApplicationContext(), twitts, bmp);
 				listTwitter.setAdapter(twitterAdapter); 
 			}else
 				Toast.makeText(getApplicationContext(), "No puedo acceder a Twitter", Toast.LENGTH_LONG).show();
+		}
+	}
+	
+	private void setUpServerRequests(int refreshTime) {
+		try {
+			System.out.println("ACTUALIZAR DATOS CADA " + refreshTime + " MINUTOS");
+			alarm = new RemainderBroadcastReceiver();
+			
+			if (alarm != null)
+				alarm.setAlarm(ctx, refreshTime);
+			else
+				Toast.makeText(ctx, "No pudo iniciarse servicio de actualizacion", Toast.LENGTH_SHORT).show();
+		} catch (Exception e) {
+			log.write(Reporter.stringStackTrace(e));
 		}
 	}
 }

@@ -22,4 +22,19 @@
     <string name="del">Borrar</string>
     <string name="no_favs_del">Nada para borrar</string>
     <string name="favs_deleted">Borrado</string>
+    <string name="add_remainder_msg">¿Deseas programar alarmas para eventos relacionados a %1$s?</string>
+    <string name="rem_remainder_msg">¿Deseas desactivar las alarmas para %1$s?</string>
+    <string name="set_alarms">Alarmas configuradas</string>
+    <string name="unset_alarms">Alarmas para %1$s desactivadas</string>
+    <string name="no_alarms">No hay alarmas para configurar</string>
+    <string name="alarms_1">"Notificaciones"</string>
+    <string name="alarms_2">"Habilite o inhabilite las notificaciones para los partidos"</string>
+    <string name="alarms_3">"Activar notificaciones"</string>
+    <string name="alarms_4">"Actualización de datos"</string>
+    <string name="alarms_5">"Tiempo en que la aplicación buscará actualizaciones en el servidor"</string>
+    <string name="alarms_6">"Configuracion de notificaciones"</string>
+    <string name="alarms_7">"Periodo de actualización"</string>
+    <string name="alarms_8">"Configure el tiempo de aviso antes del evento"</string>
+    <string name="alarm_on">Alarmas activas</string>
+    <string name="alarm_off">Alarmas inactivas</string>
 </resources>
