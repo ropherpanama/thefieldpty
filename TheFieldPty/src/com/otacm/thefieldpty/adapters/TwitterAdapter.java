@@ -14,7 +14,7 @@ import android.widget.ImageView;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-import com.example.sample.R;
+import com.otacm.thefieldpty.R;
 
 public class TwitterAdapter extends ArrayAdapter<Status>{
 

@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import com.example.sample.R;
+import com.otacm.thefieldpty.R;
 import com.otacm.thefieldpty.json.beans.TodayScores;
 import com.otacm.thefieldpty.utils.AppUtils;
 

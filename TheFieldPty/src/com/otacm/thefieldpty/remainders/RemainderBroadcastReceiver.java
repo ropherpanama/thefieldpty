@@ -14,7 +14,7 @@ import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.preference.PreferenceManager;
 
-import com.example.sample.R;
+import com.otacm.thefieldpty.R;
 import com.otacm.thefieldpty.http.HTTPTasks;
 import com.otacm.thefieldpty.utils.AppUtils;
 import com.otacm.thefieldpty.utils.Fechas;

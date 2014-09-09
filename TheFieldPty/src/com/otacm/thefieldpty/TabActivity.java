@@ -4,10 +4,11 @@ import java.lang.reflect.Type;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
@@ -30,8 +31,6 @@ import android.widget.TabHost;
 import android.widget.TabHost.OnTabChangeListener;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.example.sample.R;
 import com.google.gson.reflect.TypeToken;
 import com.otacm.thefieldpty.adapters.ExpandableListAdapter;
 import com.otacm.thefieldpty.adapters.FavoritosAdapter;
@@ -127,6 +126,12 @@ public class TabActivity extends ActionBarActivity {
 			Intent i = new Intent(this, AppSettings.class);
 //	        startActivityForResult(i, RESULT_SETTINGS);
 			startActivity(i); 
+			return true;
+		}
+		
+		switch (item.getItemId()) {
+		case android.R.id.home:
+			exitApp();
 			return true;
 		}
 	
@@ -379,6 +384,35 @@ public class TabActivity extends ActionBarActivity {
 		} catch (Exception e) {
 			log.write(Reporter.stringStackTrace(e));
 		}
+	}
+	
+	public void exitApp() {
+		DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				switch (which) {
+				case DialogInterface.BUTTON_POSITIVE:
+					finish();
+					System.exit(0);
+					break;
+
+				case DialogInterface.BUTTON_NEGATIVE:
+					break;
+				}
+			}
+		};
+
+		AlertDialog.Builder builder = new AlertDialog.Builder(ctx);
+		builder.setIcon(android.R.drawable.ic_dialog_alert);
+		builder.setTitle("Salir");
+		builder.setMessage("¿Realmente quiere salir?")
+				.setPositiveButton("Sí", dialogClickListener)
+				.setNegativeButton("No", dialogClickListener).show();
+	}
+	
+	@Override
+	public void onBackPressed() {
+		exitApp();
 	}
 }
 

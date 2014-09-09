@@ -11,8 +11,8 @@ import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
 
-import com.example.sample.R;
 import com.otacm.thefieldpty.FirstTabChildActivity;
+import com.otacm.thefieldpty.R;
 import com.otacm.thefieldpty.groups.GroupLigas;
 import com.otacm.thefieldpty.utils.AppUtils;
 
