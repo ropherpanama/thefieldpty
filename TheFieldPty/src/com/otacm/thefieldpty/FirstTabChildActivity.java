@@ -14,7 +14,6 @@ import android.widget.ListView;
 import android.widget.TabHost;
 import android.widget.TabHost.OnTabChangeListener;
 
-import com.example.sample.R;
 import com.google.gson.reflect.TypeToken;
 import com.otacm.thefieldpty.adapters.CalendarioArrayAdapter;
 import com.otacm.thefieldpty.groups.GroupCalendario;
@@ -58,6 +57,13 @@ public class FirstTabChildActivity extends ActionBarActivity {
 		if (id == R.id.action_settings) {
 			return true;
 		}
+
+		switch (item.getItemId()) {
+		case android.R.id.home:
+			finish();
+			return true;
+		}
+
 		return super.onOptionsItemSelected(item);
 	}
 	

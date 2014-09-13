@@ -13,7 +13,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.sample.R;
+import com.otacm.thefieldpty.R;
 import com.otacm.thefieldpty.database.beans.Favoritos;
 import com.otacm.thefieldpty.database.daos.FavoritosDAO;
 import com.otacm.thefieldpty.json.beans.Equipos;
@@ -21,42 +21,52 @@ import com.otacm.thefieldpty.utils.AppUtils;
 
 public class EquiposArrayAdapter extends ArrayAdapter<Equipos> {
 	private final Context context;
-	private final List<Equipos> values;
 	private FavoritosDAO dao;
 	private final ArrayAdapter<Equipos> arrayAdapter = this;
+	private LayoutInflater inflater;
 	
 	public EquiposArrayAdapter(Context context, List<Equipos> values) {
 		super(context, R.layout.list_equipos_item, values);
+		inflater = LayoutInflater.from(context);
 		this.context = context;
-		this.values = values;
 		dao = new FavoritosDAO(context);
 	}
 	
 	@SuppressLint({ "ViewHolder", "DefaultLocale" })
 	@Override
-	public View getView(final int position, View convertView, ViewGroup parent) {
-		LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		final Equipos e = values.get(position);
+	public View getView(int position, View convertView, ViewGroup parent) {
+		final Equipos e = (Equipos) this.getItem(position);
+		ImageButton imageButton;
+		TextView nameEquipo;
+		TextView detailEquipo;
 		
-		View rowView = inflater.inflate(R.layout.list_equipos_item, parent, false);
-		TextView textView = (TextView) rowView.findViewById(R.id.nameEquipo);
-		textView.setText(e.getNombre()); 
-		textView.setTypeface(AppUtils.normalFont(context)); 
-		TextView detailEquipo = (TextView) rowView.findViewById(R.id.detailEquipo);
-		detailEquipo.setText(e.getLiga() + ": " + e.getCategoria()); 
+		if(convertView == null) {
+			convertView = inflater.inflate(R.layout.list_equipos_item, null);
+			nameEquipo = (TextView) convertView.findViewById(R.id.nameEquipo);
+			nameEquipo.setTypeface(AppUtils.normalFont(context)); 
+			detailEquipo = (TextView) convertView.findViewById(R.id.detailEquipo);
+			imageButton = (ImageButton)convertView.findViewById(R.id.imageButton);
+	 
+			convertView.setTag(new EquiposViewHolder(imageButton, nameEquipo, detailEquipo));
+			
+		}else {
+			EquiposViewHolder viewHolder = (EquiposViewHolder) convertView.getTag();
+			imageButton = viewHolder.getImageButton();
+			nameEquipo = viewHolder.getNameEquipo();
+			detailEquipo = viewHolder.getDetailEquipo();
+		}
 		
+		nameEquipo.setText(e.getNombre());
+		detailEquipo.setText(e.getLiga() + ": " + e.getCategoria());
 		String nom_id = e.getCategoria() + "_" + e.getNombre();
-		
 		int id_drawable = AppUtils.getDrawableByName(context, nom_id.trim().toLowerCase().replace(" ", ""));
 		
 		if(id_drawable == 0)
-			textView.setCompoundDrawablesWithIntrinsicBounds(0, AppUtils.getDrawableByName(context, "default_logo"), 0, 0);
+			nameEquipo.setCompoundDrawablesWithIntrinsicBounds(0, AppUtils.getDrawableByName(context, "default_logo"), 0, 0);
 		else
-			textView.setCompoundDrawablesWithIntrinsicBounds(0, id_drawable, 0, 0); 
+			nameEquipo.setCompoundDrawablesWithIntrinsicBounds(0, id_drawable, 0, 0);
 		
-		final ImageButton button = (ImageButton)rowView.findViewById(R.id.imageButton);
- 
-		button.setOnClickListener(new OnClickListener() {
+		imageButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				try {
@@ -72,7 +82,7 @@ public class EquiposArrayAdapter extends ArrayAdapter<Equipos> {
 				}
 			}
 		});
-		   
-		return rowView;
+		
+		return convertView;
 	}
 }

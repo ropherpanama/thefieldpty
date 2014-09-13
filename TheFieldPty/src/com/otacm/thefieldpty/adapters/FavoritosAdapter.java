@@ -17,7 +17,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.sample.R;
+import com.otacm.thefieldpty.R;
 import com.otacm.thefieldpty.database.beans.Favoritos;
 import com.otacm.thefieldpty.database.beans.Remainder;
 import com.otacm.thefieldpty.database.daos.FavoritosDAO;

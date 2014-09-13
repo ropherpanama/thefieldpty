@@ -1,7 +1,5 @@
 package com.otacm.thefieldpty;
 
-import com.example.sample.R;
-
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
 

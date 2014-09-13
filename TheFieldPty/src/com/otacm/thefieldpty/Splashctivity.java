@@ -18,7 +18,6 @@ import android.view.WindowManager;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.example.sample.R;
 import com.otacm.thefieldpty.http.HTTPTasks;
 import com.otacm.thefieldpty.utils.AppUtils;
 import com.otacm.thefieldpty.utils.Reporter;
