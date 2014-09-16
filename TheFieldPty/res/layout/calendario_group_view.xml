@@ -25,7 +25,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/textoEquipo1"
-        android:drawableLeft="@drawable/ic_cardinals"
+        android:drawableLeft="@drawable/ic_cableondalpf_c_a_i"
         android:paddingLeft="2dp"
         android:shadowColor="#000000"
         android:shadowDx="1"
