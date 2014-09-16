@@ -7,7 +7,7 @@
     <string name="title_section3">Scores</string>
     <string name="title_section4">Noticias</string>
     <string name="action_settings">Settings</string>
-    <string name="host_webservices">http://10.240.197.196:8989/thefieldpanama/services/app/</string>
+    <string name="host_webservices">http://104.131.223.77:8080/thefieldpanama/services/app/</string>
     <string name="error_http_request">"No podemos actualizar la información, inténtelo más tarde"</string>
     <string name="data_actualizada">"Datos actualizados en %1$d mscs."</string>
     <string name="title_activity_first_tab_child">Detalles</string>
@@ -37,4 +37,11 @@
     <string name="alarms_8">"Configure el tiempo de aviso antes del evento"</string>
     <string name="alarm_on">Alarmas activas</string>
     <string name="alarm_off">Alarmas inactivas</string>
+    <string name="title_equipo">Equipo</string>
+    <string name="title_grupo">"Grupo "</string>
+    <string name="pj">PJ</string>
+    <string name="pg">PG</string>
+    <string name="pe">PE</string>
+    <string name="pp">PP</string>
+    <string name="pts">PTS</string>
 </resources>

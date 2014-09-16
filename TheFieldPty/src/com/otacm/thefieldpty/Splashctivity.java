@@ -105,9 +105,16 @@ public class Splashctivity extends Activity {
 				AppUtils.writeJsonOnDisk(getApplicationContext(), "today_scores", new StringBuilder(todayScores));
 				todayScores = null;
 				
+				String tablaPosiciones = new Scanner(streams.get(6)).useDelimiter("\\A").next(); 
+				AppUtils.writeJsonOnDisk(getApplicationContext(), "posiciones", new StringBuilder(tablaPosiciones));
+				tablaPosiciones = null;
+				
 				return true;
 			}catch(Exception e){
-				progressDialog.dismiss();
+				if(e instanceof java.util.NoSuchElementException) {
+					return true;
+				}
+				
 				log.error(Reporter.stringStackTrace(e));
 				return false;
 			}

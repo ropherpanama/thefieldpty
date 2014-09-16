@@ -8,6 +8,7 @@
         <item>scores</item>
         <item>equipos</item>
         <item>today_scores</item>
+        <item>posiciones</item>
     </string-array>
     
     <string-array name="syncFrequency">

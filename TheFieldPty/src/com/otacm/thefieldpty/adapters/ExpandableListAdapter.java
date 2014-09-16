@@ -1,5 +1,6 @@
 package com.otacm.thefieldpty.adapters;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -10,12 +11,12 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
-
 import com.otacm.thefieldpty.FirstTabChildActivity;
 import com.otacm.thefieldpty.R;
 import com.otacm.thefieldpty.groups.GroupLigas;
 import com.otacm.thefieldpty.utils.AppUtils;
 
+@SuppressLint("InflateParams")
 public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
 	private Activity context;
