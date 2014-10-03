@@ -25,6 +25,7 @@ public class AppUtils {
 			Filewriter.close();
 		} catch (Exception e) {
 			log.error(Reporter.stringStackTrace(e));
+			e.printStackTrace();
 		}
 	}
 
@@ -52,8 +53,8 @@ public class AppUtils {
 	 */
 	public static int getDrawableByName(Context ctx, String str) {
 		String name = "ic_" + str.replace(".", "_");
-		String name_aux = name.replace("-", "_");
-		System.out.println("Buscando drawable llamado : " + name_aux);
+//		String name_aux = name.replace("-", "_");
+//		System.out.println("Buscando drawable llamado : " + name_aux);
 		return ctx.getResources().getIdentifier(name, "drawable", ctx.getPackageName());
 	}
 	

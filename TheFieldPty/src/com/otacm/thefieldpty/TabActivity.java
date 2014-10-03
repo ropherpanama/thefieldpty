@@ -4,6 +4,7 @@ import java.lang.reflect.Type;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -24,6 +25,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ExpandableListView;
 import android.widget.ListView;
@@ -31,6 +33,7 @@ import android.widget.TabHost;
 import android.widget.TabHost.OnTabChangeListener;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.google.gson.reflect.TypeToken;
 import com.otacm.thefieldpty.adapters.ExpandableListAdapter;
 import com.otacm.thefieldpty.adapters.FavoritosAdapter;
@@ -94,23 +97,22 @@ public class TabActivity extends ActionBarActivity {
 		
 		dao = new FavoritosDAO(getApplicationContext());
 		
-		equipos_favoritos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View item, int position, long id) {
-            	Favoritos team = arrayAdapter.getItem(position);
-                Bundle bundle = new Bundle();
-                bundle.putInt("team", team.getId());
-            }
-        });
-		
 		createTabHost();
-		
 		createExpandableData();
 		final ExpandableListAdapter expListAdapter = new ExpandableListAdapter((Activity) ctx, groups);
         expandable_list_ligas.setAdapter(expListAdapter);
         
         cargarTabFavoritos();
 		cargarTabNoticias();
+		
+		equipos_favoritos.setOnItemClickListener(new OnItemClickListener() {
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				Favoritos team = arrayAdapter.getItem(position);
+				Intent i = new Intent(getApplicationContext(), DetalleFavoritoActivity.class);
+				i.putExtra("favId", team.getId());
+				startActivity(i); 
+			}
+		});
 	}
 
 	@Override
@@ -224,7 +226,7 @@ public class TabActivity extends ActionBarActivity {
 			
 			}
 		}catch(Exception e) {
-			log.write(Reporter.stringStackTrace(e));
+//			log.write(Reporter.stringStackTrace(e));
 		}
 	}
 	
@@ -289,7 +291,7 @@ public class TabActivity extends ActionBarActivity {
 			
 			if(scores.size() == 0) {
 				listScores.setAdapter(null);
-				Toast.makeText(getApplicationContext(), "No hay partidos el dia de hoy", Toast.LENGTH_SHORT).show();
+				Toast.makeText(getApplicationContext(), getString(R.string.no_partidos_hoy), Toast.LENGTH_SHORT).show(); 
 			} else{
 				listScores.setAdapter(expSc);
 			}
@@ -307,7 +309,7 @@ public class TabActivity extends ActionBarActivity {
 		try {			
 			new GetTwitterStatus().execute();
 		} catch (Exception e) {
-			log.write(Reporter.stringStackTrace(e));
+//			log.write(Reporter.stringStackTrace(e));
 		}
 	}
 	
@@ -344,7 +346,7 @@ public class TabActivity extends ActionBarActivity {
 				username = tc.getUserName();
 				return true;
 			} catch (Exception e) {
-				log.write(Reporter.stringStackTrace(e));
+//				log.write(Reporter.stringStackTrace(e));
 				return false;
 			}
 		}
@@ -368,7 +370,7 @@ public class TabActivity extends ActionBarActivity {
 				twitterAdapter = new TwitterAdapter(getApplicationContext(), twitts, bmp);
 				listTwitter.setAdapter(twitterAdapter); 
 			}else
-				Toast.makeText(getApplicationContext(), "No puedo acceder a Twitter", Toast.LENGTH_LONG).show();
+				Toast.makeText(getApplicationContext(), getString(R.string.twitter_no_access), Toast.LENGTH_LONG).show();
 		}
 	}
 	
@@ -380,9 +382,9 @@ public class TabActivity extends ActionBarActivity {
 			if (alarm != null)
 				alarm.setAlarm(ctx, refreshTime);
 			else
-				Toast.makeText(ctx, "No pudo iniciarse servicio de actualizacion", Toast.LENGTH_SHORT).show();
+				Toast.makeText(ctx, getString(R.string.no_actualizacion_act), Toast.LENGTH_SHORT).show();
 		} catch (Exception e) {
-			log.write(Reporter.stringStackTrace(e));
+//			log.write(Reporter.stringStackTrace(e));
 		}
 	}
 	
@@ -405,9 +407,9 @@ public class TabActivity extends ActionBarActivity {
 		AlertDialog.Builder builder = new AlertDialog.Builder(ctx);
 		builder.setIcon(android.R.drawable.ic_dialog_alert);
 		builder.setTitle("Salir");
-		builder.setMessage("¿Realmente quiere salir?")
-				.setPositiveButton("Sí", dialogClickListener)
-				.setNegativeButton("No", dialogClickListener).show();
+		builder.setMessage(getString(R.string.exit_question))
+				.setPositiveButton(getString(R.string.yes), dialogClickListener)
+				.setNegativeButton(getString(R.string.no), dialogClickListener).show();
 	}
 	
 	@Override

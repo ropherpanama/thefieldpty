@@ -53,7 +53,7 @@ public class FirstTabChildActivity extends ActionBarActivity {
 		createTabHost();//Se levantan los tabs
 		cargarDatosDeCalendario(); //Se cargan los datos del calendario para el tab
 //		ExpandableCalendario expListAdapter = new ExpandableCalendario(this, groups);
-		adapter = new CalendarioArrayAdapter(getApplicationContext(), groups);
+		adapter = new CalendarioArrayAdapter(this, groups);
 		list_partidos.setAdapter(adapter);
 		
 		//Cargar tabla de posiciones
@@ -153,7 +153,7 @@ public class FirstTabChildActivity extends ActionBarActivity {
 			grupos = TablaPosicioneServicio.getGruposByCategoria(getApplicationContext(), parent, children);
 			
 			if(grupos == null) {
-				Toast.makeText(getApplicationContext(), "Tabla no disponible", Toast.LENGTH_SHORT).show();
+				Toast.makeText(getApplicationContext(), getString(R.string.tabla_no_dispon), Toast.LENGTH_SHORT).show();
 			}else {
 				for(Grupo g : grupos) {
 					//Fila de titulo del grupo

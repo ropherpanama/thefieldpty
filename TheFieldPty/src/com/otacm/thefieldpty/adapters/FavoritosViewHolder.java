@@ -1,16 +1,18 @@
 package com.otacm.thefieldpty.adapters;
 
 import android.widget.CheckBox;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 public class FavoritosViewHolder {
 	private TextView textHeader;
 	private CheckBox checkbox;
+	private ImageButton buttonRemainder;
 
-	public FavoritosViewHolder(TextView textHeader, CheckBox checkbox) {
-		super();
+	public FavoritosViewHolder(TextView textHeader, CheckBox checkbox, ImageButton buttonRemainder) {
 		this.textHeader = textHeader;
 		this.checkbox = checkbox;
+		this.buttonRemainder = buttonRemainder;
 	}
 
 	public FavoritosViewHolder() {
@@ -31,5 +33,13 @@ public class FavoritosViewHolder {
 
 	public void setCheckbox(CheckBox checkbox) {
 		this.checkbox = checkbox;
+	}
+
+	public ImageButton getButtonRemainder() {
+		return buttonRemainder;
+	}
+
+	public void setButtonRemainder(ImageButton buttonRemainder) {
+		this.buttonRemainder = buttonRemainder;
 	}
 }

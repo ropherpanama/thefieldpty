@@ -7,6 +7,7 @@
     <string name="title_section3">Scores</string>
     <string name="title_section4">Noticias</string>
     <string name="action_settings">Settings</string>
+<!--     <string name="host_webservices">http://192.168.2.6:8989/thefieldpanama/services/app/</string> -->
     <string name="host_webservices">http://104.131.223.77:8080/thefieldpanama/services/app/</string>
     <string name="error_http_request">"No podemos actualizar la información, inténtelo más tarde"</string>
     <string name="data_actualizada">"Datos actualizados en %1$d mscs."</string>
@@ -44,4 +45,15 @@
     <string name="pe">PE</string>
     <string name="pp">PP</string>
     <string name="pts">PTS</string>
+    <string name="no_partidos_hoy">"No hay partidos el dia de hoy"</string>
+    <string name="twitter_no_access">"No puedo acceder a Twitter"</string>
+    <string name="no_actualizacion_act">"No pudo iniciarse servicio de actualizacion"</string>
+    <string name="exit_question">¿Realmente quiere salir?</string>
+    <string name="yes">Sí</string>
+    <string name="no">No</string>
+    <string name="tabla_no_dispon">"Tabla no disponible"</string>
+    <string name="saved">Guardado</string>
+    <string name="setup_alarms">"Programar alarmas"</string>
+    <string name="title_activity_detalle_favorito">Info</string>
+
 </resources>

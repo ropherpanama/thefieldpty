@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="@drawable/gray_gradient_yellow_stroke"
+    android:descendantFocusability="blocksDescendants" 
     android:orientation="vertical" >
 
     <LinearLayout
@@ -25,6 +25,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
+        android:layout_toLeftOf="@+id/linearBell"
         android:layout_toRightOf="@+id/linearCheck" >
 
         <LinearLayout
@@ -59,6 +60,8 @@
 
         <ImageButton
             android:id="@+id/buttonRemainder"
+            android:focusable="false"
+			android:focusableInTouchMode="false"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:scaleType="fitXY"

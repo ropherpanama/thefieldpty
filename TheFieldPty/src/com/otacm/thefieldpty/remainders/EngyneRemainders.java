@@ -24,7 +24,7 @@ public class EngyneRemainders {
 		try {
 			return PartidoServicio.createRemainders(ctx, teamName, favid);
 		}catch(Exception e) {
-			log.write(Reporter.stringStackTrace(e));
+//			log.write(Reporter.stringStackTrace(e));
 			return null;
 		}
 	}

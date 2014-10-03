@@ -32,7 +32,7 @@ public class EquiposArrayAdapter extends ArrayAdapter<Equipos> {
 		dao = new FavoritosDAO(context);
 	}
 	
-	@SuppressLint({ "ViewHolder", "DefaultLocale" })
+	@SuppressLint({ "ViewHolder", "DefaultLocale", "InflateParams" })
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		final Equipos e = (Equipos) this.getItem(position);
@@ -75,7 +75,7 @@ public class EquiposArrayAdapter extends ArrayAdapter<Equipos> {
 					f.setNombre(e.getNombre());
 					f.setCategoria(e.getCategoria());
 					dao.insertFavorito(f);
-					Toast.makeText(context, e.getNombre() + " guardado", Toast.LENGTH_SHORT).show();
+					Toast.makeText(context, e.getNombre() + " " + context.getString(R.string.saved), Toast.LENGTH_SHORT).show();
 					arrayAdapter.remove(e); //Remueve de la lista lo que se selecciona
 				}catch(android.database.sqlite.SQLiteConstraintException ex) {
 					Toast.makeText(context, e.getNombre() + " ya existe", Toast.LENGTH_SHORT).show();

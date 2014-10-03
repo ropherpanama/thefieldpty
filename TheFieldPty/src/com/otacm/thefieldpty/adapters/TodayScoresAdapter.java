@@ -57,12 +57,12 @@ public class TodayScoresAdapter extends ArrayAdapter<TodayScores> {
 			textEquipo2.setCompoundDrawablesWithIntrinsicBounds(id_drawable_2, 0, 0, 0);
 		
 		TextView textPts1 = (TextView) rowView.findViewById(R.id.textPts1);
-		textPts1.setTypeface(AppUtils.normalFont(context));
+		//textPts1.setTypeface(AppUtils.normalFont(context));
 		if(group.getPts1() == null) textPts1.setText("-");
 		else textPts1.setText(String.valueOf(group.getPts1()));
 		
 		TextView textPts2 = (TextView) rowView.findViewById(R.id.textPts2);
-		textPts2.setTypeface(AppUtils.normalFont(context));
+		//textPts2.setTypeface(AppUtils.normalFont(context));
 		if(group.getPts2() == null) textPts2.setText("-");
 		else textPts2.setText(String.valueOf(group.getPts2()));
 		

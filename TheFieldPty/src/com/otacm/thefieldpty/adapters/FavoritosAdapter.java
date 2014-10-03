@@ -27,9 +27,8 @@ import com.otacm.thefieldpty.utils.AppUtils;
 
 public class FavoritosAdapter extends ArrayAdapter<Favoritos>{
 	private LayoutInflater inflater;
-	private Context context;
+	private final Context context;
 	private Typeface font;
-	private ImageButton buttonRemainder;
 	private RemaindersDAO rdao;
 	private FavoritosDAO fdao;
 	
@@ -48,40 +47,40 @@ public class FavoritosAdapter extends ArrayAdapter<Favoritos>{
 		final Favoritos f = this.getItem(position);
 		TextView textHeader;
 		CheckBox checkbox;
+		ImageButton buttonRemainder;
 		
 		if (convertView == null) {
 			convertView = inflater.inflate(R.layout.favoritos_list_item, null);
 			textHeader = (TextView) convertView.findViewById(R.id.text_head);
 			checkbox = (CheckBox) convertView.findViewById(R.id.delete_favorito);
-			textHeader.setTypeface(font, Typeface.ITALIC);
-			
-			convertView.setTag(new FavoritosViewHolder(textHeader, checkbox));
-			
-			checkbox.setOnClickListener(new View.OnClickListener() {
-				public void onClick(View v) {
-					CheckBox cb = (CheckBox) v;
-					Favoritos f = (Favoritos) cb.getTag();
-					f.setSelected(cb.isChecked());
-				}
-			});
-			
 			buttonRemainder = (ImageButton) convertView.findViewById(R.id.buttonRemainder);
 			
-			if(f.getRemainder() == 1)
-				buttonRemainder.setImageResource(R.drawable.ic_remainder_on);
-			
-			buttonRemainder.setOnClickListener(new View.OnClickListener() {
-				public void onClick(View v) {
-					showAlert(f);
-				}
-			});
-			
+			convertView.setTag(new FavoritosViewHolder(textHeader, checkbox, buttonRemainder));
 		}else{
 			FavoritosViewHolder viewHolder = (FavoritosViewHolder) convertView.getTag();
 			textHeader = viewHolder.getTextHeader();
 			checkbox = viewHolder.getCheckbox();
+			buttonRemainder = viewHolder.getButtonRemainder();
 		}
 		
+		checkbox.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+				CheckBox cb = (CheckBox) v;
+				Favoritos f = (Favoritos) cb.getTag();
+				f.setSelected(cb.isChecked());
+			}
+		});
+		
+		if(f.getRemainder() == 1)
+			buttonRemainder.setImageResource(R.drawable.ic_remainder_on);
+		
+		buttonRemainder.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+				showAlert(f);
+			}
+		});
+		
+		textHeader.setTypeface(font, Typeface.ITALIC);
 		textHeader.setText(f.getNombre());
 		checkbox.setTag(f);
 		checkbox.setChecked(f.isSelected());
@@ -113,7 +112,7 @@ public class FavoritosAdapter extends ArrayAdapter<Favoritos>{
         else
         	builder.setMessage(String.format(context.getString(R.string.rem_remainder_msg), realFav.getNombre())); 
 		
-        builder.setTitle("Programar alarmas")
+        builder.setTitle(context.getString(R.string.setup_alarms))
                 .setCancelable(false)
                 .setNegativeButton("No", new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int which) {
@@ -132,14 +131,14 @@ public class FavoritosAdapter extends ArrayAdapter<Favoritos>{
                         		rems = null;
                         		
                         		fdao.updateRemainder(realFav.getId(), 1);//Se activa el ind de remainder 
-                        		buttonRemainder.setImageResource(R.drawable.ic_remainder_on);
+//                        		buttonRemainder.setImageResource(R.drawable.ic_remainder_on);
                         		Toast.makeText(context, context.getString(R.string.set_alarms), Toast.LENGTH_SHORT).show();
                     		}else
                     			Toast.makeText(context, context.getString(R.string.no_alarms) + rems, Toast.LENGTH_SHORT).show();
                 		}else {
                 			rdao.deleteRemaindersByFavId(realFav.getId());  
                 			fdao.updateRemainder(realFav.getId(), 0);//Se desactiva el ind de remainder
-                			buttonRemainder.setImageResource(R.drawable.ic_remainder_off);
+//                			buttonRemainder.setImageResource(R.drawable.ic_remainder_off);
                 			Toast.makeText(context, String.format(context.getString(R.string.unset_alarms), realFav.getNombre()), Toast.LENGTH_SHORT).show();
                 		}
                 		

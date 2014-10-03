@@ -36,11 +36,11 @@ public class RemainderBroadcastReceiver extends BroadcastReceiver {
 			public void run() {
 				if(consultingData(context)) {
 					System.out.println("Research OK :" + Fechas.fechahoy(Fechas.DDMMYYYYHORAGUION));
-					log.write("Research OK :" + Fechas.fechahoy(Fechas.DDMMYYYYHORAGUION));
+//					log.write("Research OK :" + Fechas.fechahoy(Fechas.DDMMYYYYHORAGUION));
 				}
 				else{
 					System.out.println("Research ERROR : " + Fechas.fechahoy(Fechas.DDMMYYYYHORAGUION));
-					log.write("Research ERROR : " + Fechas.fechahoy(Fechas.DDMMYYYYHORAGUION));
+//					log.write("Research ERROR : " + Fechas.fechahoy(Fechas.DDMMYYYYHORAGUION));
 				}	
 			}
 		};
@@ -130,9 +130,19 @@ public class RemainderBroadcastReceiver extends BroadcastReceiver {
 			AppUtils.writeJsonOnDisk(context, "today_scores", new StringBuilder(todayScores));
 			todayScores = null;
 			
+			String tablaPosiciones = new Scanner(streams.get(6)).useDelimiter("\\A").next(); 
+			AppUtils.writeJsonOnDisk(context, "posiciones", new StringBuilder(tablaPosiciones));
+			tablaPosiciones = null;
+			
 			return true;
 		}catch(Exception e) {
-			log.write(Reporter.stringStackTrace(e));
+			
+			if(e instanceof java.util.NoSuchElementException) {
+//				log.write(Reporter.stringStackTrace(e));
+				return true;
+			}
+			
+//			log.write(Reporter.stringStackTrace(e));
 			return false;
 		}
 	}

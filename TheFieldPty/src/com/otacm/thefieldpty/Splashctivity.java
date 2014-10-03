@@ -65,7 +65,7 @@ public class Splashctivity extends Activity {
 				Resources res = getResources();
 				String[] webservices = res.getStringArray(R.array.servicios_web);
 				
-				log.write("Inciando descarga de datos");
+//				log.write("Inciando descarga de datos");
 				
 				for(int i = 0; i < webservices.length; i++) {
 					InputStream in =  HTTPTasks.getJsonFromServer(getString(R.string.host_webservices) + webservices[i]);
@@ -75,7 +75,7 @@ public class Splashctivity extends Activity {
 						streams.add(in);
 				}
 				
-				log.write("Termina descarga de datos");
+//				log.write("Termina descarga de datos");
 				
 				String ligasData = new Scanner(streams.get(0)).useDelimiter("\\A").next(); 
 				AppUtils.writeJsonOnDisk(getApplicationContext(), "ligas", new StringBuilder(ligasData));
@@ -114,8 +114,8 @@ public class Splashctivity extends Activity {
 				if(e instanceof java.util.NoSuchElementException) {
 					return true;
 				}
-				
-				log.error(Reporter.stringStackTrace(e));
+				e.printStackTrace();
+//				log.error(Reporter.stringStackTrace(e));
 				return false;
 			}
 		}

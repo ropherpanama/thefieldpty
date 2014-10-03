@@ -122,7 +122,7 @@ public class RemaindersDAO extends DataSource{
 			close();
 			return l;
 		}catch(Exception e) {
-			log.write(Reporter.stringStackTrace(e));
+//			log.write(Reporter.stringStackTrace(e));
 			return null;
 		}
 	}

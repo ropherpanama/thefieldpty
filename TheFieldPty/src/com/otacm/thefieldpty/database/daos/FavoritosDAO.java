@@ -123,7 +123,7 @@ public class FavoritosDAO extends DataSource{
 
 			return ret;
 		}catch(Exception e) {
-			log.write(Reporter.stringStackTrace(e));
+//			log.write(Reporter.stringStackTrace(e));
 			return null;
 		}
 	}
