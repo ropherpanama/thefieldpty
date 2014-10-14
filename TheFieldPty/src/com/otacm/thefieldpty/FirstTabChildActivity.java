@@ -97,7 +97,9 @@ public class FirstTabChildActivity extends ActionBarActivity {
 					group.setEquipo2(c.getEquipo2()); 
 					group.setCategoria(c.getCategoria()); 
 					group.setDetallePartido(String.format(getString(R.string.detalle_partido), c.getFecha(), c.getHora(), c.getLugar()));
-					group.setMarcadorFinal(c.getMarcadorFinal());
+//					group.setMarcadorFinal(c.getMarcadorFinal());
+					group.setPts1(c.getPts1().trim());
+					group.setPts2(c.getPts2().trim());
 					groups.add(group);
 //					System.out.println(group.getDetallePartido());
 				}else {
@@ -106,7 +108,7 @@ public class FirstTabChildActivity extends ActionBarActivity {
 //				cont++;
 			}
 		}catch(Exception e) {
-			log.error(Reporter.stringStackTrace(e));
+//			log.error(Reporter.stringStackTrace(e));
 		}
 	}
 	
@@ -140,7 +142,7 @@ public class FirstTabChildActivity extends ActionBarActivity {
 
 			tabHost.setCurrentTab(0);
 		} catch (Exception e) {
-			log.error(Reporter.stringStackTrace(e));
+//			log.error(Reporter.stringStackTrace(e));
 		}
 	}
 	
@@ -257,7 +259,7 @@ public class FirstTabChildActivity extends ActionBarActivity {
 			}
 			
 		}catch(Exception e) {
-			log.error(Reporter.stringStackTrace(e));
+//			log.error(Reporter.stringStackTrace(e));
 		}
 	}
 }

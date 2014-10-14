@@ -91,21 +91,21 @@ public class Splashctivity extends Activity {
 				calendarioData = null;
 				
 				//Escribo en disco tambien el json de los scores
-				String scoresData = new Scanner(streams.get(3)).useDelimiter("\\A").next(); 
-				AppUtils.writeJsonOnDisk(getApplicationContext(), "scores", new StringBuilder(scoresData));
-				scoresData = null;
+//				String scoresData = new Scanner(streams.get(3)).useDelimiter("\\A").next(); 
+//				AppUtils.writeJsonOnDisk(getApplicationContext(), "scores", new StringBuilder(scoresData));
+//				scoresData = null;
 				
 				//Escribo en disco tambien el json de los equipos
-				String equiposData = new Scanner(streams.get(4)).useDelimiter("\\A").next(); 
+				String equiposData = new Scanner(streams.get(3)).useDelimiter("\\A").next(); 
 				AppUtils.writeJsonOnDisk(getApplicationContext(), "equipos", new StringBuilder(equiposData));
 				equiposData = null;
 				
 				//Escribo en disco tambien el json de los scores
-				String todayScores = new Scanner(streams.get(5)).useDelimiter("\\A").next(); 
+				String todayScores = new Scanner(streams.get(4)).useDelimiter("\\A").next(); 
 				AppUtils.writeJsonOnDisk(getApplicationContext(), "today_scores", new StringBuilder(todayScores));
 				todayScores = null;
 				
-				String tablaPosiciones = new Scanner(streams.get(6)).useDelimiter("\\A").next(); 
+				String tablaPosiciones = new Scanner(streams.get(5)).useDelimiter("\\A").next(); 
 				AppUtils.writeJsonOnDisk(getApplicationContext(), "posiciones", new StringBuilder(tablaPosiciones));
 				tablaPosiciones = null;
 				

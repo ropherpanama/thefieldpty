@@ -20,7 +20,7 @@ public class HTTPTasks {
 			URLConnection urlConnection = url.openConnection();
 			return urlConnection.getInputStream();
 		} catch (Exception e) {
-			log.error(Reporter.stringStackTrace(e));
+//			log.error(Reporter.stringStackTrace(e));
 			return null;
 		}
 	}

@@ -56,6 +56,8 @@
         android:shadowDx="1"
         android:shadowDy="1"
         android:shadowRadius="0.3"
+        android:text="10"
+        android:textAlignment="center"
         android:textColor="@color/gris_oscuro"
         android:textSize="28sp" />
 
@@ -63,14 +65,16 @@
         android:id="@+id/textMarcador2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/textMarcador1"
         android:layout_alignTop="@+id/textoEquipo2"
         android:layout_marginLeft="2sp"
-        android:layout_marginRight="2sp"
         android:layout_toRightOf="@+id/textoEquipo1"
         android:shadowColor="#000000"
         android:shadowDx="1"
         android:shadowDy="1"
         android:shadowRadius="0.3"
+        android:text="18"
+        android:textAlignment="center"
         android:textColor="@color/gris_oscuro"
         android:textSize="28sp" />
 

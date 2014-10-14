@@ -54,7 +54,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 			db.execSQL(CREATE_FAVORITOS);
 			db.execSQL(CREATE_REMAINDERS);
 		}catch(Exception e) {
-			log.error(Reporter.stringStackTrace(e));
+//			log.error(Reporter.stringStackTrace(e));
 		}
 	}
 	
@@ -65,7 +65,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 			db.execSQL("DROP TABLE IF EXISTS " + TABLE_REMAINDERS_NAME);
 			onCreate(db); 
 		}catch(Exception e) {
-			log.error(Reporter.stringStackTrace(e));
+//			log.error(Reporter.stringStackTrace(e));
 		}
 	}	
 }

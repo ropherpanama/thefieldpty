@@ -5,7 +5,9 @@ public class GroupCalendario {
 	private String equipo2;
 	private String detallePartido;
 	private String categoria;
-	private String marcadorFinal;
+//	private String marcadorFinal;
+	private String pts1;
+	private String pts2;
 
 	public String getCategoria() {
 		return categoria;
@@ -39,11 +41,27 @@ public class GroupCalendario {
 		this.equipo2 = equipo2;
 	}
 
-	public String getMarcadorFinal() {
-		return marcadorFinal;
+	public String getPts1() {
+		return pts1;
 	}
 
-	public void setMarcadorFinal(String marcadorFinal) {
-		this.marcadorFinal = marcadorFinal;
+	public void setPts1(String pts1) {
+		this.pts1 = pts1;
 	}
+
+	public String getPts2() {
+		return pts2;
+	}
+
+	public void setPts2(String pts2) {
+		this.pts2 = pts2;
+	}
+
+//	public String getMarcadorFinal() {
+//		return marcadorFinal;
+//	}
+//
+//	public void setMarcadorFinal(String marcadorFinal) {
+//		this.marcadorFinal = marcadorFinal;
+//	}
 }

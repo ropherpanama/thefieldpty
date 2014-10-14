@@ -73,11 +73,9 @@ public class CalendarioArrayAdapter extends ArrayAdapter<GroupCalendario> {
 		textoEquipo2.setText(e.getEquipo2());
 		textoInfo.setText(e.getDetallePartido());
 		
-		if(e.getMarcadorFinal().contains("-")) {
-			String array[] = e.getMarcadorFinal().split("-");
-			textMarcador1.setText(array[0].trim());
-			textMarcador2.setText(array[1].trim());
-			System.out.println("[" + array[1].trim() + "]");
+		if(e.getPts1().length() > 0 && e.getPts2().length() > 0) {
+			textMarcador1.setText(e.getPts1());
+			textMarcador2.setText(e.getPts2());
 		}else {
 			textMarcador1.setText("-");
 			textMarcador2.setText("-");

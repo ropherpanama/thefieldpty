@@ -68,7 +68,7 @@ public class PartidoServicio {
 			
 			return retorno; 
 		}catch(Exception e){
-			log.error(Reporter.stringStackTrace(e));
+//			log.error(Reporter.stringStackTrace(e));
 			return null;
 		}
 	}
@@ -101,7 +101,7 @@ public class PartidoServicio {
 			calendario = null;
 			return remainders; 
 		}catch(Exception e){
-			log.error(Reporter.stringStackTrace(e));
+//			log.error(Reporter.stringStackTrace(e));
 			return null;
 		}
 	}

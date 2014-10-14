@@ -18,13 +18,11 @@ public class AppUtils {
 	public static void writeJsonOnDisk(Context context, String fileName,
 			StringBuilder bigStr) {
 		try {
-			FileWriter Filewriter = new FileWriter(
-					context.getApplicationInfo().dataDir + "/" + fileName
-							+ ".json");
+			FileWriter Filewriter = new FileWriter(context.getApplicationInfo().dataDir + "/" + fileName + ".json");
 			Filewriter.write(bigStr.toString());
 			Filewriter.close();
 		} catch (Exception e) {
-			log.error(Reporter.stringStackTrace(e));
+//			log.error(Reporter.stringStackTrace(e));
 			e.printStackTrace();
 		}
 	}
@@ -39,7 +37,7 @@ public class AppUtils {
 					.toString());
 			return data;
 		} catch (Exception e) {
-			log.error(Reporter.stringStackTrace(e));
+//			log.error(Reporter.stringStackTrace(e));
 			return null;
 		}
 	}

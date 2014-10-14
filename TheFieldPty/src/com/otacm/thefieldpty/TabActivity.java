@@ -186,7 +186,7 @@ public class TabActivity extends ActionBarActivity {
 
 			tabHost.setCurrentTab(0);
 		} catch (Exception e) {
-			log.error(Reporter.stringStackTrace(e));
+//			log.error(Reporter.stringStackTrace(e));
 		}
 	}
 	
@@ -297,7 +297,7 @@ public class TabActivity extends ActionBarActivity {
 			}
 			
 		} catch (Exception e) {
-			log.error(Reporter.stringStackTrace(e));
+//			log.error(Reporter.stringStackTrace(e));
 		}
 	}
 	

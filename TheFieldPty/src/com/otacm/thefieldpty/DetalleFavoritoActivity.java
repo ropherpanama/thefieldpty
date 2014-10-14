@@ -16,7 +16,7 @@ public class DetalleFavoritoActivity extends ActionBarActivity {
 		setContentView(R.layout.activity_detalle_favorito);
 		favId = getIntent().getIntExtra("favId", -1);
 		textView = (TextView) findViewById(R.id.texViewDetalleFav);
-		textView.setText("Id de equipo encontrado " + favId); 
+//		textView.setText("Id de equipo encontrado " + favId); 
 	}
 	
 	@Override

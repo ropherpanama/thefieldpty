@@ -111,7 +111,7 @@ public class Fechas {
 			Date date = formatter.parse(str);
 			return date;
 		} catch (ParseException e) {
-			log.error(Reporter.stringStackTrace(e));
+//			log.error(Reporter.stringStackTrace(e));
 			return null;
 		}
 	}
@@ -137,7 +137,7 @@ public class Fechas {
 			
 			return answer;
 		} catch (Exception e) {
-			log.error(Reporter.stringStackTrace(e));
+//			log.error(Reporter.stringStackTrace(e));
 			return -1;
 		}
 	}

@@ -37,7 +37,7 @@ public class FavoritosDAO extends DataSource{
 			System.out.println("Favorito guardado");
 			return 1;
 		}catch (Exception e) {
-			log.error(Reporter.stringStackTrace(e));
+//			log.error(Reporter.stringStackTrace(e));
 			close();
 			return -1;
 		}
@@ -50,7 +50,7 @@ public class FavoritosDAO extends DataSource{
 			close();
 			return 1;
 		}catch(Exception e) {
-			log.error(Reporter.stringStackTrace(e));
+//			log.error(Reporter.stringStackTrace(e));
 			return -1;
 		}
 	}
@@ -72,7 +72,7 @@ public class FavoritosDAO extends DataSource{
 			close();
 			return l;
 		}catch(Exception e) {
-			log.error(Reporter.stringStackTrace(e));
+//			log.error(Reporter.stringStackTrace(e));
 			close();
 			return null;
 		}
@@ -94,7 +94,7 @@ public class FavoritosDAO extends DataSource{
 			close();
 			return true;
 		}catch(Exception e) {
-			log.error(Reporter.stringStackTrace(e));
+//			log.error(Reporter.stringStackTrace(e));
 			return false;
 		}
 	}

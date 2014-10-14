@@ -7,8 +7,7 @@
     <string name="title_section3">Scores</string>
     <string name="title_section4">Noticias</string>
     <string name="action_settings">Settings</string>
-<!--     <string name="host_webservices">http://192.168.2.6:8989/thefieldpanama/services/app/</string> -->
-    <string name="host_webservices">http://104.131.223.77:8080/thefieldpanama/services/app/</string>
+    <string name="host_webservices">http://api.thefieldpty.com:8080/thefieldpanama/services/app/</string>
     <string name="error_http_request">"No podemos actualizar la información, inténtelo más tarde"</string>
     <string name="data_actualizada">"Datos actualizados en %1$d mscs."</string>
     <string name="title_activity_first_tab_child">Detalles</string>
